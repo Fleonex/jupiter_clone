@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "830005811639",
+    "project_id": "jupiter-clone",
+    "storage_bucket": "jupiter-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830005811639:android:680109666c76c11e1ef032",
+        "android_client_info": {
+          "package_name": "com.example.jupiter_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "830005811639-gkkru6jhfrdpgr782c53vd3el5h4kjld.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jupiter_clone",
+            "certificate_hash": "09359c9bf39e884826848e6d6047f091c4e2e06c"
+          }
+        },
+        {
+          "client_id": "830005811639-k2tp6p486ijkpmoi4uuqnbca63te091r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDMX6uEczpW3bZmWkniA8bt0x8ZVH9WtE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "830005811639-15ctrno11i92cfg98nqutbiid8qs1275.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
