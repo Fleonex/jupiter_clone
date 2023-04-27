@@ -437,6 +437,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.1"
+  sign_button:
+    dependency: "direct main"
+    description:
+      name: sign_button
+      sha256: "11ea0a70dd78f5f2eddde7fa7655821fa802224eb4f0e3def51574a57364122a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
   sign_in_with_apple:
     dependency: transitive
     description:
