@@ -11,10 +11,14 @@ dependencies:
   firebase_core: ^2.10.0
   flutter:
     sdk: flutter
+
   flutterfire_ui: ^0.4.3+20
   google_sign_in: ^5.2.1
   provider: ^6.0.5
   sign_button: ^2.0.3
+  gsheets: ^0.3.0
+  desktop_webview_auth: ^0.0.11
+  # desktop_webview_auth: 
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
