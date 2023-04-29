@@ -48,7 +48,7 @@ class _DashboardState extends State<Dashboard> {
               width: double.infinity,
               height: 240,
               decoration: BoxDecoration(
-                color: black,
+                color: purple,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
