@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:jupiter_clone/screens/dashboard/dashboard.dart';
-import 'package:jupiter_clone/style/constants.dart';
+import 'package:jupiter_clone/constants.dart';
 import 'package:jupiter_clone/firebase_options.dart';
 import 'package:jupiter_clone/Screens/Welcome/welcome_screen.dart';
-import 'package:jupiter_clone/style/constants.dart';
+import 'package:jupiter_clone/constants.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,8 +49,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      // home: const WelcomeScreen(),
-      home: Dashboard(),
+      home: const WelcomeScreen(),
     );
   }
 }
