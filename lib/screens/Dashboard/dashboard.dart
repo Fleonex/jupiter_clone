@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:jupiter_clone/components/navbar.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -18,51 +18,51 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      bottomNavigationBar: Container(
-        // add border radius to only top side
-        decoration: BoxDecoration(
-            color: black,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12)
-            )
-
-        ),
-
-
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
-
-          child: GNav(
-              backgroundColor: black,
-              color: white,
-              activeColor: white,
-              tabBackgroundColor: Colors.grey.shade900,
-              gap: 3,
-              padding: EdgeInsets.all(16),
-              tabs: const[
-                GButton(
-                  icon: Icons.home,
-                  text: 'Home',
-                ),
-                GButton(
-                  icon: Icons.graphic_eq,
-                  text: 'Graphs',
-                ),
-                GButton(
-                  icon: Icons.money,
-                  text: 'Budget',
-                ),
-                GButton(
-                  icon: Icons.person,
-                  text: 'Profile',
-                ),
-              ]
-          ),
-
-        ),
-
-      ),
+      // bottomNavigationBar: Container(
+      //   // add border radius to only top side
+      //   decoration: BoxDecoration(
+      //       color: black,
+      //       borderRadius: BorderRadius.only(
+      //           topLeft: Radius.circular(12),
+      //           topRight: Radius.circular(12)
+      //       )
+      //
+      //   ),
+      //
+      //
+      //   child: Padding(
+      //     padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+      //
+      //     child: GNav(
+      //         backgroundColor: black,
+      //         color: white,
+      //         activeColor: white,
+      //         tabBackgroundColor: Colors.grey.shade900,
+      //         gap: 3,
+      //         padding: EdgeInsets.all(16),
+      //         tabs: const[
+      //           GButton(
+      //             icon: Icons.home,
+      //             text: 'Home',
+      //           ),
+      //           GButton(
+      //             icon: Icons.graphic_eq,
+      //             text: 'Graphs',
+      //           ),
+      //           GButton(
+      //             icon: Icons.money,
+      //             text: 'Budget',
+      //           ),
+      //           GButton(
+      //             icon: Icons.person,
+      //             text: 'Profile',
+      //           ),
+      //         ]
+      //     ),
+      //
+      //   ),
+      //
+      // ),
 
       backgroundColor: softBlue,
       body: Container(
