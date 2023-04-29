@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jupiter_clone/Screens/Welcome/welcome_screen.dart';
+import 'package:jupiter_clone/screens/dashboard/dashboard.dart';
 import 'package:jupiter_clone/style/constants.dart';
 
 
