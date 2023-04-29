@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
 import 'package:jupiter_clone/components/navbar.dart';
+import 'package:jupiter_clone/screens/Dashboard/transaction.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -12,59 +13,20 @@ class Dashboard extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 }
-
+List<Widget> AllWidgets = [
+  Text('Widget 1'),
+  Text('Widget 2'),
+  Text('Widget 3'),
+  // ...
+];
 class _DashboardState extends State<Dashboard> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-
-      // bottomNavigationBar: Container(
-      //   // add border radius to only top side
-      //   decoration: BoxDecoration(
-      //       color: black,
-      //       borderRadius: BorderRadius.only(
-      //           topLeft: Radius.circular(12),
-      //           topRight: Radius.circular(12)
-      //       )
-      //
-      //   ),
-      //
-      //
-      //   child: Padding(
-      //     padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
-      //
-      //     child: GNav(
-      //         backgroundColor: black,
-      //         color: white,
-      //         activeColor: white,
-      //         tabBackgroundColor: Colors.grey.shade900,
-      //         gap: 3,
-      //         padding: EdgeInsets.all(16),
-      //         tabs: const[
-      //           GButton(
-      //             icon: Icons.home,
-      //             text: 'Home',
-      //           ),
-      //           GButton(
-      //             icon: Icons.graphic_eq,
-      //             text: 'Graphs',
-      //           ),
-      //           GButton(
-      //             icon: Icons.money,
-      //             text: 'Budget',
-      //           ),
-      //           GButton(
-      //             icon: Icons.person,
-      //             text: 'Profile',
-      //           ),
-      //         ]
-      //     ),
-      //
-      //   ),
-      //
-      // ),
-
       backgroundColor: softBlue,
+      // appBar: AppBar(
+      //   title: Text('My App'),
+      // ),
       body: Container(
         child: Column(
           children: [
@@ -142,6 +104,17 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
             ),
+            // Column(
+            //     children: [ListView.builder(
+            //       itemCount: AllWidgets.length,
+            //       itemBuilder: (BuildContext context, int index) {
+            //         return ListTile(
+            //           title: Text(AllWidgets[index].toString()),
+            //         );
+            //       },
+            //     )]
+            // )
+            // ,
             SizedBox(
               height: 20,
             ),
@@ -157,48 +130,51 @@ class _DashboardState extends State<Dashboard> {
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    // children: [
+                    //   Text(
+                    //     'Transactions',
+                    //     style: subHeader,
+                    //   ),
+                    //   SizedBox(
+                    //     height: 10,
+                    //   ),
+                    //   Row(
+                    //     children: [
+                    //       Image.asset(
+                    //         'assets/icons/ic_apple.png',
+                    //         height: 50,
+                    //       ),
+                    //       SizedBox(
+                    //         width: 12,
+                    //       ),
+                    //       Column(
+                    //         crossAxisAlignment: CrossAxisAlignment.start,
+                    //         children: [
+                    //           Text(
+                    //             'Apple',
+                    //             style: mainHeader,
+                    //           ),
+                    //           Text(
+                    //             'AirPod Pro 3',
+                    //             style: paragraph,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       Spacer(),
+                    //       Text(
+                    //         '+\$5,320',
+                    //         style: labelBluePrimary,
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   SizedBox(
+                    //     height: 14,
+                    //   ),
+                    //
+                    // ],
                     children: [
-                      Text(
-                        'Transactions',
-                        style: subHeader,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/icons/ic_apple.png',
-                            height: 50,
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Apple',
-                                style: mainHeader,
-                              ),
-                              Text(
-                                'AirPod Pro 3',
-                                style: paragraph,
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          Text(
-                            '+\$5,320',
-                            style: labelBluePrimary,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 14,
-                      ),
-
+                      Transaction(),
                     ],
                   ),
                 ),

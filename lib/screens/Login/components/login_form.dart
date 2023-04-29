@@ -6,6 +6,7 @@ import 'package:jupiter_clone/style/constants.dart';
 import '../../Signup/signup_screen.dart';
 
 import 'package:jupiter_clone/services/auth.dart';
+
 class LoginForm extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -70,7 +71,8 @@ class _LoginFormState extends State<LoginForm> {
                 print("This is email " + _emailController.text + "\n");
                 print("This is password " + _passwordController.text + "\n");
                 var authClass = new AuthService();
-                var currentUser = await authClass.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
+                var currentUser = await authClass.signInWithEmailAndPassword(
+                    _emailController.text, _passwordController.text);
                 // var currentUser = "Hello World";
                 print("The current User is " + currentUser.toString());
                 if (currentUser != null) {
