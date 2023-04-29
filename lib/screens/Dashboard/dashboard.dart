@@ -3,8 +3,17 @@ import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
 
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
   @override
+  _DashboardState createState() => _DashboardState();
+
+  const Dashboard({
+    Key? key,
+  }) : super(key: key);
+}
+
+class _DashboardState extends State<Dashboard> {
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: softBlue,
