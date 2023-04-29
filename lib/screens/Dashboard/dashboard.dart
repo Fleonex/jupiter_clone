@@ -18,15 +18,15 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: GNav(
-       gap: 8,
+       gap: 3,
        tabs: const[
          GButton(
            icon: Icons.home,
-           text: 'Dashboard',
+           text: 'Home',
          ),
          GButton(
            icon: Icons.graphic_eq,
-           text: 'Analytics',
+           text: 'Graphs',
          ),
          GButton(
            icon: Icons.money,
