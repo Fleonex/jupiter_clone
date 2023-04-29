@@ -17,7 +17,6 @@ class _DashboardState extends State<Dashboard> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      width: double.infinity,
       bottomNavigationBar: GNav(
        gap: 8,
        tabs: const[
