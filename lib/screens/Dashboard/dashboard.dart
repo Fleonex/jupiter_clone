@@ -46,7 +46,7 @@ class _DashboardState extends State<Dashboard> {
           children: [
             Container(
               width: double.infinity,
-              height: 220,
+              height: 240,
               decoration: BoxDecoration(
                 color: black,
                 borderRadius: BorderRadius.only(
