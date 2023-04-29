@@ -127,7 +127,7 @@ class _DashboardState extends State<Dashboard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Balance',
+                              'Total Expenses',
                               style: subTitle,
                             ),
                             Text(
@@ -190,39 +190,7 @@ class _DashboardState extends State<Dashboard> {
                           ),
                           Spacer(),
                           Text(
-                            '-\$5,320',
-                            style: labelRedPrimary,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 14,
-                      ),
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/icons/ic_bwa.png',
-                            height: 50,
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'BWA Class',
-                                style: mainHeader,
-                              ),
-                              Text(
-                                'Scholarship',
-                                style: paragraph,
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          Text(
-                            '+\$500,000',
+                            '+\$5,320',
                             style: labelBluePrimary,
                           ),
                         ],
@@ -230,67 +198,7 @@ class _DashboardState extends State<Dashboard> {
                       SizedBox(
                         height: 14,
                       ),
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/icons/ic_dji.png',
-                            height: 50,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'DJI',
-                                style: mainHeader,
-                              ),
-                              Text(
-                                'Mavic Pro',
-                                style: paragraph,
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          Text(
-                            '-\$900,210',
-                            style: labelRedPrimary,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 14,
-                      ),
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/icons/ic_sbux.png',
-                            height: 50,
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Starbucks',
-                                style: mainHeader,
-                              ),
-                              Text(
-                                'Cocoa Oatmilk',
-                                style: paragraph,
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          Text(
-                            '-\$72,000',
-                            style: labelRedPrimary,
-                          ),
-                        ],
-                      ),
+
                     ],
                   ),
                 ),
