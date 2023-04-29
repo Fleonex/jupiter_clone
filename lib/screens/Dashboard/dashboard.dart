@@ -56,11 +56,6 @@ class Dashboard extends StatelessWidget {
                               icon:
                               Image.asset('assets/icons/ic_bell.png', height: 20),
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon:
-                              Image.asset('assets/icons/ic_mail.png', height: 20),
-                            ),
                           ],
                         ),
                       ],

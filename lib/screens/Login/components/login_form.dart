@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../style/constants.dart';
 import '../../Signup/signup_screen.dart';
+import 'package:jupiter_clone/screens/Dashboard/dashboard.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({
@@ -46,7 +47,16 @@ class LoginForm extends StatelessWidget {
           Hero(
             tag: "login_btn",
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return Dashboard();
+                    },
+                  ),
+                );
+              },
               child: Text(
                 "Login".toUpperCase(),
               ),
