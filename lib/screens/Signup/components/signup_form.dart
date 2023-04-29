@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../style/constants.dart';
 import '../../Login/login_screen.dart';
+import 'package:jupiter_clone/services/auth.dart';
 
 class SignUpForm extends StatefulWidget {
-
   @override
   _SignUpFormState createState() => _SignUpFormState();
   const SignUpForm({
@@ -14,13 +14,11 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   String _email = "";
   String _password = "";
-
 
   final _formkey = GlobalKey<FormState>();
   @override
@@ -60,8 +58,15 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
-            onPressed: asy () {
-
+            onPressed: () async {
+              print("This is email " + _emailController.text + "\n");
+              print("This is password " + _passwordController.text + "\n");
+              var authClass = new AuthService();
+              var currentUser = authClass.createUserWithEmailAndPassword(
+                  email: _emailController.text,
+                  password: _passwordController.text);
+              // var currentUser = "Hello World";
+              print("The current User is " + currentUser.toString());
             },
             child: Text("Sign Up".toUpperCase()),
           ),

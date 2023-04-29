@@ -70,7 +70,7 @@ class _LoginFormState extends State<LoginForm> {
                 print("This is email " + _emailController.text + "\n");
                 print("This is password " + _passwordController.text + "\n");
                 var authClass = new AuthService();
-                var currentUser = await authClass.signInWithEmailAndPassword(_email, _password);
+                var currentUser = await authClass.signInWithEmailAndPassword(_emailController.text, _passwordController.text);
                 // var currentUser = "Hello World";
                 print("The current User is " + currentUser.toString());
                 if (currentUser != null) {
