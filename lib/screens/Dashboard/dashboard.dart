@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
-
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -16,6 +17,30 @@ class _DashboardState extends State<Dashboard> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      width: double.infinity,
+      bottomNavigationBar: GNav(
+       gap: 8,
+       tabs: const[
+         GButton(
+           icon: Icons.home,
+           text: 'Dashboard',
+         ),
+         GButton(
+           icon: Icons.graphic_eq,
+           text: 'Analytics',
+         ),
+         GButton(
+           icon: Icons.money,
+           text: 'Budget',
+         ),
+          GButton(
+            icon: Icons.person,
+            text: 'Profile',
+          ),
+       ]
+      ),
+
+
       backgroundColor: softBlue,
       body: Container(
         child: Column(
@@ -33,7 +58,7 @@ class _DashboardState extends State<Dashboard> {
               child: Padding(
                 padding: EdgeInsets.only(
                   top: 60,
-                  left: 22,
+                  left: 24,
                   right: 24,
                 ),
                 child: Column(
@@ -189,7 +214,7 @@ class _DashboardState extends State<Dashboard> {
                             height: 50,
                           ),
                           SizedBox(
-                            width: 12,
+                            width: 10,
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
