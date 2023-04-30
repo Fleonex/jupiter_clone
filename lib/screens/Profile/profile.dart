@@ -102,12 +102,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      AuthService().signOut();
+
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.power_settings_new, color: red, size: 30),
+                        const Icon(Icons.newspaper, color: red, size: 30),
                         const SizedBox(
                           width: 12,
                         ),
@@ -115,7 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'Sign Out',
+                              'Upload Excel Sheet',
                               style: GoogleFonts.poppins(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
@@ -160,12 +160,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-
+                      AuthService().signOut();
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.newspaper, color: red, size: 30),
+                        const Icon(Icons.power_settings_new, color: red, size: 30),
                         const SizedBox(
                           width: 12,
                         ),
@@ -173,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'Upload Excel Sheet',
+                              'Sign Out',
                               style: GoogleFonts.poppins(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
@@ -192,6 +192,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
+          ),
+          const SizedBox(
+            height: 10,
           ),
         ],
       ),
