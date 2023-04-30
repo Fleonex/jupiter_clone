@@ -20,7 +20,7 @@ class _NavbarState extends State<Navbar> {
           // add border radius to only top side
           decoration: BoxDecoration(
               color: black,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12)
               )
@@ -38,7 +38,7 @@ class _NavbarState extends State<Navbar> {
               activeColor: white,
               tabBackgroundColor: Colors.grey.shade900,
               gap: 3,
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               tabs: const[
                 GButton(
                   icon: Icons.home,

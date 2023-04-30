@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:jupiter_clone/components/already_have_an_account_acheck.dart';
 import 'package:jupiter_clone/screens/Dashboard/dashboard.dart';
+import 'package:jupiter_clone/screens/Dashboard/home.dart';
 import 'package:jupiter_clone/style/constants.dart';
 import '../../Signup/signup_screen.dart';
 
@@ -82,7 +83,7 @@ class _LoginFormState extends State<LoginForm> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return Dashboard();
+                        return const Home();
                       },
                     ),
                   );
