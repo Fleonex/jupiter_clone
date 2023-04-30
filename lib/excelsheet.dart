@@ -8,14 +8,13 @@ import 'package:excel/excel.dart';
 import 'package:path/path.dart';
 import 'package:jupiter_clone/models/transactions.dart';
 
-class bulkUpload extends StatefulWidget {
-  const bulkUpload({Key? key}) : super(key: key);
+class uploadFile extends StatefulWidget {
+  const uploadFile({Key? key}) : super(key: key);
 
   @override
-  State<bulkUpload> createState() => _bulkUploadState();
+  State<uploadFile> createState() => _uploadFileState();
 }
-
-class _bulkUploadState extends State<bulkUpload> {
+class _uploadFileState extends State<uploadFile> {
   List<List<dynamic>> _data = [];
   String? filePath;
   // This function is triggered when the  button is pressed
@@ -45,57 +44,12 @@ class _bulkUploadState extends State<bulkUpload> {
                 _pickFile();
               },
             ),
-
             ElevatedButton(
               child: const Text("Populate Data"),
               onPressed: () {
                 _pickFile();
               },
             ),
-            // ListView.builder(
-            //   itemCount: _data.length,
-            //   scrollDirection: Axis.vertical,
-            //   shrinkWrap: true,
-            //   itemBuilder: (_, index) {
-            //     return Card(
-            //       margin: const EdgeInsets.all(3),
-            //       color: index == 0 ? Colors.amber : Colors.white,
-            //       child: ListTile(
-            //         leading: Text(_data[index][0].toString(),textAlign: TextAlign.center,
-            //           style: TextStyle(fontSize: index == 0 ? 18 : 15, fontWeight:index == 0 ? FontWeight.bold :FontWeight.normal,color: index == 0 ? Colors.red : Colors.black),),
-            //         title: Text(_data[index][3],textAlign: TextAlign.center,
-            //           style: TextStyle(fontSize: index == 0 ? 18 : 15, fontWeight: index == 0 ? FontWeight.bold :FontWeight.normal,color: index == 0 ? Colors.red : Colors.black),),
-            //         trailing: Text(_data[index][4].toString(),textAlign: TextAlign.center,
-            //           style: TextStyle(fontSize: index == 0 ? 18 : 15, fontWeight: index == 0 ? FontWeight.bold : FontWeight.normal,color: index == 0 ? Colors.red : Colors.black),),
-            //       ),
-            //     );
-            //   },
-            // ),
-            // Container(
-            //   child:  ElevatedButton(
-            //     onPressed: ()async{
-            //     // set loading to true here
-            //        for (var element in _data.skip(1))  // for skip first value bcs its contain name
-            //       {
-            //         // var mydata = {
-            //         //   "data": {
-            //         //     "certificateType": "ProofOfEducation",
-            //         //     "membershipNum": element[0],   if you want to iterate only name then use element[0]
-            //         //     "registrationNum": element[1],
-            //         //     "serialNum": element[2],
-            //         //     "bcName": element[3],
-            //         //     "bcExam": element[4],
-            //         //     "date":element[5]
-            //         //   },
-            //         //
-            //         // };
-            //         ScaffoldMessenger.of(context).showSnackBar(  SnackBar(
-            //           content: Text(element.toString()),
-            //         ));
-            //       }
-            //     }, child: const Text("Iterate Data"),
-            //   ),
-            // ),
           ],
         ));
   }
