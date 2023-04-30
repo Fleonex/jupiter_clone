@@ -33,9 +33,9 @@ class _DashboardState extends State<Dashboard> {
             Container(
               width: double.infinity,
               height: 240,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: purple,
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
                 ),
@@ -118,104 +118,7 @@ class _DashboardState extends State<Dashboard> {
             const SizedBox(
               height: 20,
             ),
-            // Container(
-            //   height: 300,
-            //   child: SingleChildScrollView(
-            //     child: Column(children: [
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //     ]),
-            //   ),
-            // ),
             TransactionList(),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       color: white,
-            //       borderRadius: BorderRadius.all(
-            //         Radius.circular(30),
-            //       ),
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(24.0),
-            //       child: Column(
-            //         children: [
-            //           Transaction(),
-            //           // Transaction(),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       color: white,
-            //       borderRadius: BorderRadius.all(
-            //         Radius.circular(30),
-            //       ),
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(24.0),
-            //       child: Column(
-            //         children: [
-            //           Transaction(),
-            //           // Transaction(),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -224,7 +127,7 @@ class _DashboardState extends State<Dashboard> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Transaction()),
+            MaterialPageRoute(builder: (context) => const Transaction()),
           );
         },
         backgroundColor: Colors.green,
