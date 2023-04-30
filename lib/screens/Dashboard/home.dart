@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jupiter_clone/screens/Dashboard/dashboard.dart';
 import 'package:jupiter_clone/style/color.dart';
 
+import '../Profile/profile.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -16,7 +18,7 @@ class _HomeState extends State<Home> {
     Dashboard(),
     Placeholder(),
     Placeholder(),
-    Placeholder(),
+    ProfilePage(),
   ];
 
   void setIndex(int index) {

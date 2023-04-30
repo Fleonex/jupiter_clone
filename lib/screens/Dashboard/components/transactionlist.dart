@@ -38,7 +38,7 @@ class _TransactionListState extends State<TransactionList> {
   Widget build(BuildContext context) {
 
     return  Container(
-      height: MediaQuery.of(context).size.height * 0.53,
+      height: MediaQuery.of(context).size.height * 0.62,
         child: SingleChildScrollView(
           child: Column(
             children: _widgetList,

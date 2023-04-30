@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jupiter_clone/screens/Dashboard/dashboard.dart';
+import 'package:jupiter_clone/screens/Dashboard/home.dart';
 import 'package:jupiter_clone/screens/Welcome/welcome_screen.dart';
 import 'package:jupiter_clone/style/constants.dart';
 import 'package:jupiter_clone/excelsheet.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: ProfilePage(),
+      home: const Home(),
     );
   }
 }
