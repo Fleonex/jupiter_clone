@@ -121,7 +121,7 @@ class _bulkUploadState extends State<bulkUpload> {
             rowList.add(cell!.value.toString());
           }
           if (!first) {
-            addTransaction(rowList[0], rowList[1], rowList[2]);
+            await Database().addTransaction(rowList[0], rowList[1], rowList[2]);
             rows.add(rowList);
           } else {
             first = false;

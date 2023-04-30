@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:uuid/uuid.dart';
 
-final FirebaseFirestore firestore = FirebaseFirestore.instance;
+final db = FirebaseFirestore.instance;
 
 class Transaction {
   final String date;
@@ -15,24 +15,40 @@ class Transaction {
   }
 }
 
-void addTransaction(
-    String func_date, String func_amount, String func_description) async {
-  CollectionReference transactions =
-      FirebaseFirestore.instance.collection('Transaction');
+// void addTransaction(
+//     String func_date, String func_amount, String func_description) async {
+//   // CollectionReference transactions =
+//   //     FirebaseFirestore.instance.collection('Transaction');
+//   Transaction transaction =
+//       Transaction(func_date, func_amount, func_description);
+//   Map<String, dynamic> transactionData = transaction.toMap();
+//   await db
+//       .collection("Transactions")
+//       .doc("random")
+//       .set(transactionData)
+//       .onError((e, _) => print("Error writing document: $e"));
 
-  Transaction transaction =
-      Transaction(func_date, func_amount, func_description);
-  Map<String, dynamic> transactionData = transaction.toMap();
-  await transactions
-      .add({
+//   print("Added this into Transactions collection " +
+//       transactionData.toString() +
+//       "\n");
+// }
+
+class Database {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final String userCollection = "users";
+  final String noteCollection = "notes";
+  Future<void> addTransaction(
+      String func_date, String func_amount, String func_description) async {
+    try {
+      var uuid = Uuid().v4();
+      await _firestore.collection("Transactions").doc(uuid).set({
         "date": func_date,
         "amount": func_amount,
-        "description": func_description
-      })
-      .then((value) => print("User Added"))
-      .catchError((error) => print("Failed to add user: $error"));
-
-  print("Added this into Transactions collection " +
-      transactionData.toString() +
-      "\n");
+        "description": func_description,
+        "creationDate": Timestamp.now(),
+      });
+    } catch (e) {
+      print("An error occured ,this is the error " + e.toString());
+    }
+  }
 }
