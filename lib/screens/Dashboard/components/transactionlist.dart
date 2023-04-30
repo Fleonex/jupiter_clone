@@ -24,10 +24,13 @@ class _TransactionListState extends State<TransactionList> {
 
     print("This is the snapshot " + snapshot.toString());
     List<Widget> list = [];
-    list.add(transactionFile.Transaction());
     snapshot.docs.forEach((doc) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      list.add(transactionFile.Transaction());
+      list.add(transactionFile.Transaction(
+        date: data['date'],
+        amount: data['amount'],
+        description: data['description'],
+      ));
     });
     setState(() {
       _widgetList = list;
@@ -36,14 +39,13 @@ class _TransactionListState extends State<TransactionList> {
 
   @override
   Widget build(BuildContext context) {
-
-    return  Container(
+    return Container(
       height: MediaQuery.of(context).size.height * 0.62,
-        child: SingleChildScrollView(
-          child: Column(
-            children: _widgetList,
-          ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: _widgetList,
         ),
+      ),
     );
   }
 }
