@@ -26,6 +26,8 @@ dependencies:
   open_file: ^3.2.1
   excel: ^2.1.0
   uuid: ^3.0.7
+  intl: ^0.17.0
+
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
@@ -33,5 +35,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/
-    - assets/icons/
+  - assets/images/
+  - assets/icons/

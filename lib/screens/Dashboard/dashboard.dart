@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:jupiter_clone/screens/Dashboard/components/transactionlist.dart';
+import 'package:jupiter_clone/screens/forms/transaction_form.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
 import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart';
@@ -115,10 +116,7 @@ class _DashboardState extends State<Dashboard> {
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Transaction(amount: "amount",date: "date", description: "category"))
-          );
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const TransactionForm()));
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.add),
