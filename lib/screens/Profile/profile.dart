@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jupiter_clone/services/auth.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
 
@@ -43,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Image.asset('assets/images/user_photo.png',
                                 height: 150),
-                            SizedBox(
+                            const SizedBox(
                               width: 6,
                             ),
                           ],
@@ -66,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                       ],
@@ -76,15 +77,15 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
             width: double.infinity,
             height: 70,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: white,
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(50),
                 topRight: Radius.circular(50),
                 bottomLeft: Radius.circular(50),
@@ -92,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 20,
                 left: 24,
                 right: 24,
@@ -101,13 +102,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-
+                      AuthService().signOut();
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.power_settings_new, color: red, size: 30),
-                        SizedBox(
+                        const Icon(Icons.power_settings_new, color: red, size: 30),
+                        const SizedBox(
                           width: 12,
                         ),
                         Column(
@@ -123,11 +124,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],

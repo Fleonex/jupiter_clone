@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jupiter_clone/screens/Dashboard/dashboard.dart';
 import 'package:jupiter_clone/screens/Dashboard/home.dart';
+import 'package:jupiter_clone/screens/Login/login_screen.dart';
 import 'package:jupiter_clone/screens/Welcome/welcome_screen.dart';
 import 'package:jupiter_clone/style/constants.dart';
 import 'package:jupiter_clone/excelsheet.dart';
@@ -50,27 +52,25 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: Home(),
+      home: const AuthWrap(),
     );
   }
 }
 
-// class AuthWrap extends StatelessWidget {
-//   const AuthWrap({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder(
-//       stream: FirebaseAuth.instance.authStateChanges(),
-//       builder: (context, snapshot) {
-//         // if (!snapshot.hasData) {
-//         //   // ! TODO: Add a Sign In Page
-//         //   return const SignInPage();
-//         // } else {
-//         //   // ! TODO: Add a Home Page
-//         //   return const HomePage();
-//         // }
-//       },
-//     );
-//   }
-// }
+class AuthWrap extends StatelessWidget {
+  const AuthWrap({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const LoginScreen();
+        } else {
+          return const Home();
+        }
+      },
+    );
+  }
+}

@@ -16,20 +16,9 @@ class WelcomeScreen extends StatelessWidget {
           child: Responsive(
             desktop: Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const Expanded(
-                  child: WelcomeImage(),
-                ),
+              children: const [
                 Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      SizedBox(
-                        width: 450,
-                        child: LoginAndSignupBtn(),
-                      ),
-                    ],
-                  ),
+                  child: WelcomeImage(),
                 ),
               ],
             ),
@@ -55,10 +44,6 @@ class MobileWelcomeScreen extends StatelessWidget {
         Row(
           children: const [
             Spacer(),
-            Expanded(
-              flex: 8,
-              child: LoginAndSignupBtn(),
-            ),
             Spacer(),
           ],
         ),
