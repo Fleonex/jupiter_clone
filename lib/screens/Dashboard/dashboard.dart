@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:jupiter_clone/screens/Dashboard/transactionlist.dart';
+import 'package:jupiter_clone/screens/Dashboard/components/transactionlist.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
-import 'package:jupiter_clone/components/navbar.dart';
-import 'package:jupiter_clone/screens/Dashboard/transaction.dart';
+import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart';
 import 'package:jupiter_clone/excelsheet.dart';
 
 class Dashboard extends StatefulWidget {
@@ -25,11 +24,52 @@ List<Widget> AllWidgets = [
 
 class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
+
     return Scaffold(
+      bottomNavigationBar: Container(
+        // add border radius to only top side
+        decoration: BoxDecoration(
+            color: black,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12)
+            )
+
+        ),
+
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+
+            child: GNav(
+                backgroundColor: black,
+                color: white,
+                activeColor: white,
+                tabBackgroundColor: Colors.grey.shade900,
+                gap: 3,
+                padding: EdgeInsets.all(16),
+                tabs: const[
+                  GButton(
+                    icon: Icons.home,
+                    text: 'Home',
+                  ),
+                  GButton(
+                    icon: Icons.graphic_eq,
+                    text: 'Graphs',
+                  ),
+                  GButton(
+                    icon: Icons.money,
+                    text: 'Budget',
+                  ),
+                  GButton(
+                    icon: Icons.person,
+                    text: 'Profile',
+                  ),
+                ]
+            ),
+          ),
+      ),
+
       backgroundColor: softBlue,
-      // appBar: AppBar(
-      //   title: Text('My App'),
-      // ),
       body: Container(
         child: Column(
           children: [
@@ -38,7 +78,7 @@ class _DashboardState extends State<Dashboard> {
               height: 240,
               decoration: BoxDecoration(
                 color: purple,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
                 ),
@@ -221,6 +261,18 @@ class _DashboardState extends State<Dashboard> {
             // ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        elevation: 10,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Transaction()),
+          );
+        },
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.add),
+
       ),
     );
   }
