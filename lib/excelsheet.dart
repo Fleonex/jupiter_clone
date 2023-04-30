@@ -4,6 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle, rootBundle;
 import 'package:csv/csv.dart';
+import 'package:excel/excel.dart';
+import 'package:path/path.dart';
 
 class bulkUpload extends StatefulWidget {
   const bulkUpload({Key? key}) : super(key: key);
@@ -91,36 +93,30 @@ class _bulkUploadState extends State<bulkUpload> {
   void _pickFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result == null) return;
-    // we will log the name, size and path of the
-    // first picked file (if multiple are selected)
     print("This is the name of the file you picked!" + result.files.first.name);
+
     filePath = result.files.first.path!;
-    final bytesBuilder = BytesBuilder();
+    if (filePath != null) {
+      var bytes = await File(filePath.toString()).readAsBytesSync();
+      var excel = await Excel.decodeBytes(bytes);
+      List<List<String>> rows = [];
+      for (var table in excel.tables.keys) {
+        print(table); //sheet Name
+        print(excel.tables[table]!.maxCols);
+        print(excel.tables[table]!.maxRows);
 
-    final fileStream = File(filePath!).openRead();
-    // Read the file contents into the byte accumulator
-    await for (final chunk in fileStream) {
-      bytesBuilder.add(chunk);
+        for (var row in excel.tables[table]!.rows) {
+          List<String> rowList = [];
+          for (var cell in row) {
+            rowList.add(cell!.value.toString());
+          }
+          rows.add(rowList);
+          print("The value of each row" + rows.last.toString());
+        }
+        setState(() {
+          _data = rows;
+        });
+      }
     }
-
-    // Decode the file contents from bytes to a string
-    final contents = utf8.decode(bytesBuilder.toBytes());
-    print("These are the fields " + contents.toString());
-    // final fields = await input
-    //     .transform(utf8.decoder)
-    //     .transform(const CsvToListConverter())
-    //     .toList();
-    // var sink = ByteConversionSink.withCallback((data) {
-    //   var decoded = utf8.decode(data);
-    //   print(decoded);
-    // });
-    // print("This is the input " + input.toString());
-    // final fields = await input.transform(utf8.decoder);
-
-    // print("These are fields " + fields.toString() + "\n");
-
-    // setState(() {
-    //   _data = fields;
-    // });
   }
 }

@@ -22,6 +22,7 @@ dependencies:
   csv: ^5.0.1
   path_provider: ^2.0.10
   open_file: ^3.2.1
+  excel: ^2.1.0
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
