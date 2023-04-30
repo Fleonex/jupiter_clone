@@ -1,6 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:jupiter_clone/screens/Dashboard/transaction.dart'
+import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart'
     as transactionFile;
 
 class TransactionList extends StatefulWidget {
@@ -34,8 +36,9 @@ class _TransactionListState extends State<TransactionList> {
 
   @override
   Widget build(BuildContext context) {
+
     return  Container(
-        height: 300, // adjust the height to your needs
+      height: MediaQuery.of(context).size.height * 0.62,
         child: SingleChildScrollView(
           child: Column(
             children: _widgetList,

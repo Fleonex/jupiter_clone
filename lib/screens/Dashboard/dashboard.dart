@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:jupiter_clone/screens/Dashboard/transactionlist.dart';
+import 'package:jupiter_clone/screens/Dashboard/components/transactionlist.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
-import 'package:jupiter_clone/components/navbar.dart';
-import 'package:jupiter_clone/screens/Dashboard/transaction.dart';
+import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart';
 import 'package:jupiter_clone/excelsheet.dart';
 
 class Dashboard extends StatefulWidget {
@@ -25,11 +24,9 @@ List<Widget> AllWidgets = [
 
 class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: softBlue,
-      // appBar: AppBar(
-      //   title: Text('My App'),
-      // ),
       body: Container(
         child: Column(
           children: [
@@ -38,13 +35,13 @@ class _DashboardState extends State<Dashboard> {
               height: 240,
               decoration: BoxDecoration(
                 color: purple,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   top: 60,
                   left: 24,
                   right: 24,
@@ -54,7 +51,7 @@ class _DashboardState extends State<Dashboard> {
                     Row(
                       children: [
                         Image.asset('assets/images/user_photo.png', height: 50),
-                        SizedBox(
+                        const SizedBox(
                           width: 12,
                         ),
                         Column(
@@ -70,7 +67,7 @@ class _DashboardState extends State<Dashboard> {
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Row(
                           children: [
                             IconButton(
@@ -82,7 +79,7 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Row(
@@ -118,7 +115,7 @@ class _DashboardState extends State<Dashboard> {
             //     )]
             // )
             // ,
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             // Container(
@@ -221,6 +218,18 @@ class _DashboardState extends State<Dashboard> {
             // ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        elevation: 10,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Transaction()),
+          );
+        },
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.add),
+
       ),
     );
   }

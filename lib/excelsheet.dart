@@ -75,7 +75,7 @@ class _uploadFileState extends State<uploadFile> {
             rowList.add(cell!.value.toString());
           }
           if (!first) {
-            await Database().addTransaction(rowList[0], rowList[1], rowList[2]);
+            // await Database().addTransaction(rowList[0], rowList[1], rowList[2]);
             rows.add(rowList);
           } else {
             first = false;
