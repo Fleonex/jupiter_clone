@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: Dashboard(),
+      home: ProfilePage(),
     );
   }
 }
