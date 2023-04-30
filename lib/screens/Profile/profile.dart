@@ -81,12 +81,14 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           Container(
             width: double.infinity,
-            height: 200,
+            height: 70,
             decoration: BoxDecoration(
               color: white,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(50),
                 topRight: Radius.circular(50),
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50),
               ),
             ),
             child: Padding(
@@ -97,32 +99,33 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset('assets/icons/ic_apple.png', height: 50),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Apple',
-                            style: mainHeader,
-                          ),
-                          Text(
-                            'AirPod Pro 3',
-                            style: paragraph,
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Text(
-                        'Rp. 2.000.000',
-                        style: mainHeader,
-                      ),
-                    ],
+                  GestureDetector(
+                    onTap: () {
+
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.power_settings_new, color: red, size: 30),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Sign Out',
+                              style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: black,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 20,

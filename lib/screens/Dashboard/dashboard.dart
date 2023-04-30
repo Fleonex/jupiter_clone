@@ -104,20 +104,10 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
             ),
-            // Column(
-            //     children: [ListView.builder(
-            //       itemCount: AllWidgets.length,
-            //       itemBuilder: (BuildContext context, int index) {
-            //         return ListTile(
-            //           title: Text(AllWidgets[index].toString()),
-            //         );
-            //       },
-            //     )]
-            // )
-            // ,
             const SizedBox(
               height: 20,
             ),
+
             TransactionList(),
           ],
         ),
@@ -127,7 +117,7 @@ class _DashboardState extends State<Dashboard> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const Transaction()),
+            MaterialPageRoute(builder: (context) => Transaction(amount: "amount",date: "date", description: "category"))
           );
         },
         backgroundColor: Colors.green,
