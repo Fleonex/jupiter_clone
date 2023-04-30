@@ -37,10 +37,10 @@ class _LoginFormState extends State<LoginForm> {
             onSaved: (email) {
               _email = email.toString();
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
               ),
             ),
@@ -55,10 +55,10 @@ class _LoginFormState extends State<LoginForm> {
               onSaved: (password) {
                 _password = password.toString();
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
                 ),
               ),
@@ -69,24 +69,16 @@ class _LoginFormState extends State<LoginForm> {
             tag: "login_btn",
             child: ElevatedButton(
               onPressed: () async {
-                print("This is email " + _emailController.text + "\n");
-                print("This is password " + _passwordController.text + "\n");
-                // var authClass = new AuthService();
-                // var currentUser = await authClass.signInWithEmailAndPassword(
-                //     _emailController.text, _passwordController.text);
-                // // var currentUser = "Hello World";
-                // print("The current User is " + currentUser.toString());
-
-                //Change here, make when currentUser != null
-                if (true) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const Home();
-                      },
-                    ),
-                  );
+                if (_formkey.currentState!.validate()) {
+                  _formkey.currentState!.save();
+                  dynamic result = await AuthService().signInWithEmailAndPassword(_email, _password);
+                  if (result == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Invalid Credentials"),
+                      ),
+                    );
+                  }
                 }
               },
               child: Text(

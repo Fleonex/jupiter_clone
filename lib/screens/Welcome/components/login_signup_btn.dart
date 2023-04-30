@@ -17,7 +17,7 @@ class LoginAndSignupBtn extends StatelessWidget {
           tag: "login_btn",
           child: ElevatedButton(
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
@@ -34,7 +34,7 @@ class LoginAndSignupBtn extends StatelessWidget {
         const SizedBox(height: 16),
         ElevatedButton(
           onPressed: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) {

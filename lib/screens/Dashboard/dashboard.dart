@@ -5,7 +5,9 @@ import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
 import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart';
 import 'package:jupiter_clone/excelsheet.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart'
+as transactionFile;
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
@@ -23,8 +25,33 @@ List<Widget> AllWidgets = [
 ];
 
 class _DashboardState extends State<Dashboard> {
-  Widget build(BuildContext context) {
 
+  double _totalExpenses = 0;
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  void _fetchData() async {
+    QuerySnapshot snapshot =
+    await FirebaseFirestore.instance.collection('Transactions').get();
+    print("This is the snapshot " + snapshot.toString());
+    // List<Widget> list = [];
+    double total = 0;
+    snapshot.docs.forEach((doc) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      // print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" + data['amount'].toString() + "\n");
+        total += double.parse(data['amount']);
+    });
+    // print("\n\n\n\nThis is the total " + total.toString() + "\n");
+    setState(() {
+      _totalExpenses = total;
+    });
+
+  }
+
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: softBlue,
       body: Container(
@@ -33,9 +60,9 @@ class _DashboardState extends State<Dashboard> {
             Container(
               width: double.infinity,
               height: 240,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: purple,
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
                 ),
@@ -93,7 +120,7 @@ class _DashboardState extends State<Dashboard> {
                               style: subTitle,
                             ),
                             Text(
-                              '\$12,500,000',
+                              'Rs. $_totalExpenses',
                               style: largePrimary,
                             ),
                           ],
@@ -117,7 +144,7 @@ class _DashboardState extends State<Dashboard> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Transaction(amount: "amount",date: "date", description: "category"))
+            MaterialPageRoute(builder: (context) => transactionFile.Transaction(amount: "amount",date: "date", description: "category")),
           );
         },
         backgroundColor: Colors.green,

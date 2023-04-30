@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:jupiter_clone/models/transactions.dart';
 
-class DatabaseService {
+class DatabaseService extends ChangeNotifier{
   final String uid;
   DatabaseService({required this.uid});
 
@@ -12,9 +13,16 @@ class DatabaseService {
     try {
       Map<String, dynamic> transactionData = transaction.toMap();
       transactionData['creationDate'] = Timestamp.now();
+
       _userCollection.doc(uid).collection('transactions').add(
           transactionData
       );
+
+      _userCollection.doc(uid).update({
+        'totalExpenses': FieldValue.increment(transaction.amount as num),
+        'noOfTransactions': FieldValue.increment(1),
+      });
+
 
       return Future.value(true);
     } catch (e) {
@@ -30,6 +38,8 @@ class DatabaseService {
   }
 
   Stream<List<Map<String, dynamic>>> get transactions {
-    return _userCollection.doc(uid).collection('transactions').snapshots().map(_transactionsListFromSnapshot);
+    final res =  _userCollection.doc(uid).collection('transactions').snapshots().map(_transactionsListFromSnapshot);
+    notifyListeners();
+    return res;
   }
 }

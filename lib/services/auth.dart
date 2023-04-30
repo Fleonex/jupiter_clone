@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final CollectionReference _usersCollectionReference =
+      FirebaseFirestore.instance.collection('Users');
 
   signInWithEmailAndPassword(String email, String password) async {
     try {
@@ -13,15 +15,15 @@ class AuthService {
       );
 
       final User? user = authResult.user;
+
       return user;
     } catch (e) {
 
-      print("I got this error " + e.toString() + "\n");
-      return null;
+      print("I got this error $e\n");
       return null;
     }
   }
-  @override
+
    createUserWithEmailAndPassword({
     required String email,
     required String password,
@@ -32,9 +34,16 @@ class AuthService {
         password: password,
       );
       final User? user = authResult.user;
+
+      _usersCollectionReference.doc(user!.uid).set({
+        'email': email,
+        'totalExpenses': 0,
+        'noOfTransactions': 0,
+      });
+
       return user;
     } catch (e) {
-      print("I got this error " + e.toString() + "\n");
+      print("I got this error $e\n");
       return null;
     }
   }
@@ -52,6 +61,18 @@ class AuthService {
       final UserCredential authResult =
           await _auth.signInWithCredential(credential);
       final User? user = authResult.user;
+
+      // Check if user already exists
+      final DocumentSnapshot userDoc = await _usersCollectionReference.doc(user!.uid).get();
+
+      if (!userDoc.exists) {
+        _usersCollectionReference.doc(user.uid).set({
+          'email': user.email,
+          'totalExpenses': 0,
+          'noOfTransactions': 0,
+        });
+      }
+
       return user;
     } catch (e) {
       return null;
