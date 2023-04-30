@@ -4,22 +4,17 @@ import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
 import 'package:jupiter_clone/components/navbar.dart';
 
-class Transaction extends StatefulWidget {
+
+
+
+class Transaction extends StatelessWidget {
+  String date="";
+  String amount="";
+  String description="";
+
+  Transaction({required this.date,required this.amount,required this.description});
+
   @override
-  _TransactionState createState() => _TransactionState();
-  const Transaction({
-    Key? key,
-  }) : super(key: key);
-}
-
-List<Widget> AllWidgets = [
-  Text('Widget 1'),
-  Text('Widget 2'),
-  Text('Widget 3'),
-  // ...
-];
-
-class _TransactionState extends State<Transaction> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -42,29 +37,28 @@ class _TransactionState extends State<Transaction> {
                     height: 50,
                   ),
                   SizedBox(
-                    width: 12,
+                    height: 12,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Apple',
+                        '$date',
                         style: mainHeader,
                       ),
                       Text(
-                        'AirPod Pro 3',
+                        '$description',
                         style: paragraph,
                       ),
                     ],
                   ),
                   Spacer(),
                   Text(
-                    '+\$5,320',
+                    '+Rs: $amount',
                     style: labelBluePrimary,
                   ),
                 ]),
               ]))
-              // Transaction(),
             ],
           ),
         ),
