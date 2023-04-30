@@ -3,12 +3,12 @@ import 'package:uuid/uuid.dart';
 
 final db = FirebaseFirestore.instance;
 
-class Transaction {
+class Transactions {
   final String date;
   final String amount;
   final String description;
 
-  Transaction(this.date, this.amount, this.description);
+  Transactions(this.date, this.amount, this.description);
 
   Map<String, dynamic> toMap() {
     return {'date': date, 'amount': amount, 'description': description};
@@ -32,23 +32,23 @@ class Transaction {
 //       transactionData.toString() +
 //       "\n");
 // }
-
-class Database {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final String userCollection = "users";
-  final String noteCollection = "notes";
-  Future<void> addTransaction(
-      String func_date, String func_amount, String func_description) async {
-    try {
-      var uuid = Uuid().v4();
-      await _firestore.collection("Transactions").doc(uuid).set({
-        "date": func_date,
-        "amount": func_amount,
-        "description": func_description,
-        "creationDate": Timestamp.now(),
-      });
-    } catch (e) {
-      print("An error occured ,this is the error " + e.toString());
-    }
-  }
-}
+//
+// class Database {
+//   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+//   final String userCollection = "users";
+//   final String noteCollection = "notes";
+//   Future<void> addTransaction(
+//       String func_date, String func_amount, String func_description) async {
+//     try {
+//       var uuid = Uuid().v4();
+//       await _firestore.collection("Transactions").doc(uuid).set({
+//         "date": func_date,
+//         "amount": func_amount,
+//         "description": func_description,
+//         "creationDate": Timestamp.now(),
+//       });
+//     } catch (e) {
+//       print("An error occured ,this is the error " + e.toString());
+//     }
+//   }
+// }
