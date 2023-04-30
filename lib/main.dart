@@ -8,6 +8,7 @@ import 'package:jupiter_clone/screens/Welcome/welcome_screen.dart';
 import 'package:jupiter_clone/style/constants.dart';
 import 'package:jupiter_clone/excelsheet.dart';
 import 'package:jupiter_clone/screens/Profile/profile.dart';
+import 'package:jupiter_clone/screens/Splash/splash.dart';
 
 
 void main() async {
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: const AuthWrap(),
+      home: Splash(),
     );
   }
 }
