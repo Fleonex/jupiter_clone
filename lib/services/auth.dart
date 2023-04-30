@@ -15,10 +15,29 @@ class AuthService {
       final User? user = authResult.user;
       return user;
     } catch (e) {
+
+      print("I got this error " + e.toString() + "\n");
+      return null;
       return null;
     }
   }
-
+  @override
+   createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final UserCredential authResult = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      final User? user = authResult.user;
+      return user;
+    } catch (e) {
+      print("I got this error " + e.toString() + "\n");
+      return null;
+    }
+  }
   // Sign in with Google
   Future<User?> signInWithGoogle() async {
     try {
@@ -48,3 +67,4 @@ class AuthService {
     }
   }
 }
+
