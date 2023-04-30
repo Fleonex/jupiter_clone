@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart'
-    as transactionFile;
+as transactionFile;
 
 class TransactionList extends StatefulWidget {
   @override
@@ -20,14 +20,14 @@ class _TransactionListState extends State<TransactionList> {
 
   void _fetchData() async {
     QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('Transactions').get();
+    await FirebaseFirestore.instance.collection('Transactions').get();
 
     print("This is the snapshot " + snapshot.toString());
     List<Widget> list = [];
     snapshot.docs.forEach((doc) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       list.add(transactionFile.Transaction(
-        date: data['date'],
+        date: data['date'].toString().substring(0,10),
         amount: data['amount'],
         description: data['description'],
       ));
@@ -40,7 +40,7 @@ class _TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.62,
+      height: MediaQuery.of(context).size.height * 0.572,
       child: SingleChildScrollView(
         child: Column(
           children: _widgetList,

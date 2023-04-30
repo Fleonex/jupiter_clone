@@ -104,118 +104,11 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
             ),
-            // Column(
-            //     children: [ListView.builder(
-            //       itemCount: AllWidgets.length,
-            //       itemBuilder: (BuildContext context, int index) {
-            //         return ListTile(
-            //           title: Text(AllWidgets[index].toString()),
-            //         );
-            //       },
-            //     )]
-            // )
-            // ,
             const SizedBox(
               height: 20,
             ),
-            // Container(
-            //   height: 300,
-            //   child: SingleChildScrollView(
-            //     child: Column(children: [
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //       SizedBox(
-            //         height: 10,
-            //       ),
-            //       Transaction(),
-            //     ]),
-            //   ),
-            // ),
-            TransactionList(),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       color: white,
-            //       borderRadius: BorderRadius.all(
-            //         Radius.circular(30),
-            //       ),
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(24.0),
-            //       child: Column(
-            //         children: [
-            //           Transaction(),
-            //           // Transaction(),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
 
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       color: white,
-            //       borderRadius: BorderRadius.all(
-            //         Radius.circular(30),
-            //       ),
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(24.0),
-            //       child: Column(
-            //         children: [
-            //           Transaction(),
-            //           // Transaction(),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            TransactionList(),
           ],
         ),
       ),
@@ -224,7 +117,7 @@ class _DashboardState extends State<Dashboard> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Transaction()),
+            MaterialPageRoute(builder: (context) => Transaction(amount: "amount",date: "date", description: "category"))
           );
         },
         backgroundColor: Colors.green,

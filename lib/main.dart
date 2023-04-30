@@ -7,6 +7,7 @@ import 'package:jupiter_clone/style/constants.dart';
 import 'package:jupiter_clone/excelsheet.dart';
 import 'package:jupiter_clone/screens/Profile/profile.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: const Home(),
+      home: Home(),
     );
   }
 }
