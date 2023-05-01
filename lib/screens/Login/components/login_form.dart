@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:jupiter_clone/components/already_have_an_account_acheck.dart';
 import 'package:jupiter_clone/style/constants.dart';
 import '../../Signup/signup_screen.dart';
 
 import 'package:jupiter_clone/services/auth.dart';
+import 'package:jupiter_clone/style/color.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -20,10 +22,13 @@ class _LoginFormState extends State<LoginForm> {
   String _email = "";
   String _password = "";
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+
+    return _isLoading ? SpinKitSpinningLines(color: purple) :  Form(
       key: _formKey,
       child: Column(
         children: [
@@ -69,7 +74,13 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
+                  setState(() {
+                    _isLoading = true;
+                  });
                   dynamic result = await AuthService().signInWithEmailAndPassword(_email, _password);
+                  setState(() {
+                    _isLoading = false;
+                  });
                   if (result == null) {
                     if (mounted) return;
 
