@@ -36,7 +36,7 @@ class _TransactionFormState extends State<TransactionForm> {
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");
     final DateTime enteredDate = dateFormat.parse(dateController.text);
 
-    Transactions newTransaction = Transactions(enteredDate, double.parse(enteredAmount), enteredDescription);
+    Transactions newTransaction = Transactions(enteredDate, double.parse(enteredAmount), enteredDescription, null);
 
     final Future? res = _db.addTransaction(newTransaction);
 
