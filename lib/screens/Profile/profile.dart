@@ -156,31 +156,31 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            width: double.infinity,
-            height: 70,
-            decoration: const BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(50),
-                topRight: Radius.circular(50),
-                bottomLeft: Radius.circular(50),
-                bottomRight: Radius.circular(50),
+          GestureDetector(
+            onTap: () {
+              _pickFile();
+            },
+            child: Container(
+              width: double.infinity,
+              height: 70,
+              decoration: const BoxDecoration(
+                color: white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50),
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 20,
-                left: 24,
-                right: 24,
-              ),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                        _pickFile();
-                    },
-                    child: Row(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 20,
+                  left: 24,
+                  right: 24,
+                ),
+                child: Column(
+                  children: [
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.newspaper, color: red, size: 30),
@@ -203,11 +203,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         const Spacer(),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
