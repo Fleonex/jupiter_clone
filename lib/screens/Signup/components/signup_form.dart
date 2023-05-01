@@ -78,14 +78,7 @@ class _SignUpFormState extends State<SignUpForm> {
           AlreadyHaveAnAccountCheck(
             login: false,
             press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return LoginScreen();
-                  },
-                ),
-              );
+              Navigator.of(context).pop();
             },
           ),
         ],

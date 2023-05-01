@@ -45,14 +45,6 @@ class _BudgetingPageState extends State<BudgetingPage> {
 
     for (var category in categories) {
       _categoryLimit.add(_buildCategoryBudgetRow(category.name, category.budget, (value) {
-        if (double.tryParse(value) != null) {
-          return ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Please enter a valid number'),
-              duration: Duration(seconds: 1),
-            ),
-          );
-        }
         DatabaseService(uid: uid).updateCategory(category.name, double.parse(value));
         setState(() {
           category.budget = double.parse(value);
