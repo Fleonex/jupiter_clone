@@ -6,7 +6,7 @@ import 'package:jupiter_clone/util/default_categories.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference _usersCollectionReference =
-      FirebaseFirestore.instance.collection('Users');
+      FirebaseFirestore.instance.collection('users');
 
   signInWithEmailAndPassword(String email, String password) async {
     try {
