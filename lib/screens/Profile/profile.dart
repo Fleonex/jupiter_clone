@@ -5,21 +5,14 @@ import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
 import '../Settings/Settings.dart';
 import 'package:excel/excel.dart';
-import 'package:path/path.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:path/path.dart';
-import 'dart:convert';
 import 'dart:io';
-import 'package:jupiter_clone/category.dart';
 import 'package:jupiter_clone/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:jupiter_clone/services/database.dart';
-import 'package:jupiter_clone/style/color.dart';
 import '../../models/transactions.dart';
-import '../../style/constants.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -33,16 +26,18 @@ class _ProfilePageState extends State<ProfilePage> {
     String filePath;
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result == null) return;
-    print("This is the name of the file you picked!" + result.files.first.name);
+    // print("This is the name of the file you picked!" + result.files.first.name);
     filePath = result.files.first.path!;
     if (filePath != null) {
+      final res = await _db.getCategories();
+      if (res == null) {
+        return;
+      }
+
       var bytes = File(filePath.toString()).readAsBytesSync();
       var excel = Excel.decodeBytes(bytes);
       List<List<String>> rows = [];
       for (var table in excel.tables.keys) {
-        print(table); //sheet Name
-        print(excel.tables[table]!.maxCols);
-        print(excel.tables[table]!.maxRows);
         bool first = true;
         for (var row in excel.tables[table]!.rows) {
           List<String> rowList = [];
@@ -51,13 +46,30 @@ class _ProfilePageState extends State<ProfilePage> {
           }
           if (!first) {
             String gotCategory = "";
+            List<String> cats = [];
+            for(int i = 0; i < res.length; i++){
+              cats.add(res[i]["category"]);
+            }
             if(rowList[3] == ""){
-              gotCategory = "Food";
-              // gotCategory =  await getCategory(["transportation","food","beauty"], rowList[2]);
-              print("The category of this " + rowList[2].toString() +" "+ gotCategory + "\n");
+              gotCategory = res[0]["category"];
+
+              // gotCategory =  await getCategory(cats, rowList[2]);
+              // print("The category of this " + rowList[2].toString() +" "+ gotCategory + "\n");
             }
             else{
+
               gotCategory = rowList[3].toString();
+              bool found = false;
+              for(int i = 0;i<cats.length;i++){
+                if(cats[i].toLowerCase() == gotCategory.toLowerCase()){
+                  found = true;
+                  gotCategory = cats[i];
+                  break;
+                }
+              }
+              if(!found){
+                await _db.addCategory(gotCategory, 10000);
+              }
             }
             final String enteredAmount = rowList[1].toString();
             final String enteredDescription = rowList[2].toString();
@@ -67,23 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Transactions newTransaction = Transactions(enteredDate, double.parse(enteredAmount), enteredDescription, selectedCategory!);
 
             await  _db.addTransaction(newTransaction);
-            // if (res != null) {
-            //   ScaffoldMessenger.of(context).showSnackBar(
-            //     const SnackBar(
-            //       content: Text('Transaction added successfully'),
-            //     ),
-            //   );
-            //   Navigator.of(context).pop();
-            // } else {
-            //   if (mounted) {
-            //     ScaffoldMessenger.of(context).showSnackBar(
-            //       const SnackBar(
-            //         content: Text('Error adding transaction'),
-            //       ),
-            //     );
-            //   }
-            // }
-            // await Database().addTransaction(rowList[0], rowList[1], rowList[2]);
+
             rows.add(rowList);
           } else {
             first = false;
