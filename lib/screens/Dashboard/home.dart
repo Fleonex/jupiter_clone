@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jupiter_clone/screens/Dashboard/dashboard.dart';
 import 'package:jupiter_clone/style/color.dart';
 
+import '../Graphs/graphs.dart';
 import '../Profile/profile.dart';
 
 class Home extends StatefulWidget {
@@ -16,7 +17,7 @@ class _HomeState extends State<Home> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
-    Placeholder(),
+    Graphs(),
     Placeholder(),
     ProfilePage(),
   ];
@@ -54,25 +55,25 @@ class _HomeState extends State<Home> {
             child: BottomNavigationBar(
               enableFeedback: true,
               backgroundColor: black,
-              items: <BottomNavigationBarItem>[
+              items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                  icon: const Icon(Icons.home),
+                  icon: Icon(Icons.home),
                   backgroundColor: black,
                   // Display label when selected
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
-                  icon: const Icon(Icons.graphic_eq),
+                  icon: Icon(Icons.graphic_eq),
                   backgroundColor: black,
                   label: 'Graphs',
                 ),
                 BottomNavigationBarItem(
-                  icon: const Icon(Icons.money),
+                  icon: Icon(Icons.money),
                   backgroundColor: black,
                   label: 'Budget',
                 ),
                 BottomNavigationBarItem(
-                  icon: const Icon(Icons.person),
+                  icon: Icon(Icons.person),
                   backgroundColor: black,
                   label: 'Profile',
                 ),

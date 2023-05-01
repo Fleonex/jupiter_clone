@@ -1,17 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:intl/intl.dart';
-import 'package:jupiter_clone/screens/Dashboard/components/transactionlist.dart';
 import 'package:jupiter_clone/screens/forms/transaction_form.dart';
 import 'package:jupiter_clone/services/database.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
-import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart';
-import 'package:jupiter_clone/excelsheet.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart'
-as transactionFile;
+as transaction_file;
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
@@ -41,12 +36,12 @@ class _DashboardState extends State<Dashboard> {
 
   void _fetchData() async {
     List<Map<String, dynamic>>? snapshot = await DatabaseService(uid: uid).getTransactions();
-    print("This is the snapshot $snapshot");
+    // print("This is the snapshot $snapshot");
     // List<Widget> list = [];
     double total = 0;
 
     if (snapshot == null) {
-      print("Snapshot is null");
+      // print("Snapshot is null");
       setState(() {
         _totalExpenses = total;
         _widgetList = [];
@@ -63,7 +58,7 @@ class _DashboardState extends State<Dashboard> {
       DateTime date = data['date'].toDate();
 
       list.add(
-        transactionFile.Transaction(
+        transaction_file.Transaction(
           amount: data['amount'].toString(),
           date: DateFormat('dd MMM yyyy').format(date).toString(),
           description: data['description'],
@@ -76,9 +71,10 @@ class _DashboardState extends State<Dashboard> {
       _totalExpenses = total;
       _widgetList = list.reversed.toList();
     });
-
+    // dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: softBlue,
@@ -161,14 +157,15 @@ class _DashboardState extends State<Dashboard> {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ..._widgetList
-                ]
-              ),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                ..._widgetList
+              ]
             ),
+          ),
+          const SizedBox(
+            height: 20
           ),
         ],
       ),
@@ -183,7 +180,6 @@ class _DashboardState extends State<Dashboard> {
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.add),
-
       ),
     );
   }
