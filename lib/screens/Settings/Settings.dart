@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jupiter_clone/style/color.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
+        backgroundColor: purple,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,9 +45,9 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               items: _currencies
                   .map((currency) => DropdownMenuItem<String>(
-                value: currency,
-                child: Text(currency),
-              ))
+                        value: currency,
+                        child: Text(currency),
+                      ))
                   .toList(),
               onChanged: (value) {
                 setState(() {
@@ -70,9 +72,9 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               items: _dateFormats
                   .map((dateFormat) => DropdownMenuItem<String>(
-                value: dateFormat,
-                child: Text(dateFormat),
-              ))
+                        value: dateFormat,
+                        child: Text(dateFormat),
+                      ))
                   .toList(),
               onChanged: (value) {
                 setState(() {
@@ -97,9 +99,9 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               items: _languages
                   .map((language) => DropdownMenuItem<String>(
-                value: language,
-                child: Text(language),
-              ))
+                        value: language,
+                        child: Text(language),
+                      ))
                   .toList(),
               onChanged: (value) {
                 setState(() {

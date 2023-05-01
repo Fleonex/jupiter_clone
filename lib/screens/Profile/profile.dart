@@ -138,34 +138,34 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(
             height: 10,
           ),
-          Container(
-            width: double.infinity,
-            height: 70,
-            decoration: const BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(50),
-                topRight: Radius.circular(50),
-                bottomLeft: Radius.circular(50),
-                bottomRight: Radius.circular(50),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              height: 70,
+              decoration: const BoxDecoration(
+                color: white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50),
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 20,
-                left: 24,
-                right: 24,
-              ),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SettingsPage()),
-                      );
-                    },
-                    child: Row(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 20,
+                  left: 24,
+                  right: 24,
+                ),
+                child: Column(
+                  children: [
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.settings, color: red, size: 30),
@@ -188,42 +188,42 @@ class _ProfilePageState extends State<ProfilePage> {
                         const Spacer(),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
           const SizedBox(
             height: 10,
           ),
-          Container(
-            width: double.infinity,
-            height: 70,
-            decoration: const BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(50),
-                topRight: Radius.circular(50),
-                bottomLeft: Radius.circular(50),
-                bottomRight: Radius.circular(50),
+          GestureDetector(
+            onTap: () {
+              AuthService().signOut();
+            },
+            child: Container(
+              width: double.infinity,
+              height: 70,
+              decoration: const BoxDecoration(
+                color: white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50),
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 20,
-                left: 24,
-                right: 24,
-              ),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      AuthService().signOut();
-                    },
-                    child: Row(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 20,
+                  left: 24,
+                  right: 24,
+                ),
+                child: Column(
+                  children: [
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.power_settings_new, color: red, size: 30),
@@ -246,11 +246,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         const Spacer(),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
