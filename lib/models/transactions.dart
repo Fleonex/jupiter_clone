@@ -7,11 +7,16 @@ class Transactions {
   final DateTime date;
   final num amount;
   final String description;
-
-  Transactions(this.date, this.amount, this.description);
+  final String category;
+  Transactions(this.date, this.amount, this.description, this.category);
 
   Map<String, dynamic> toMap() {
-    return {'date': date, 'amount': amount, 'description': description};
+    return {
+      'date': date,
+      'amount': amount,
+      'description': description,
+      'category': category
+    };
   }
 }
 

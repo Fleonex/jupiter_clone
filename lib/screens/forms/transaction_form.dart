@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jupiter_clone/services/database.dart';
 import 'package:jupiter_clone/style/color.dart';
-
+import 'package:jupiter_clone/category.dart';
 import '../../models/transactions.dart';
 import '../../style/constants.dart';
 
@@ -17,26 +17,33 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final DatabaseService _db = DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
+  final DatabaseService _db =
+      DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
 
   final TextEditingController amountController = TextEditingController();
 
-  final TextEditingController descriptionController =
-  TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   final TextEditingController dateController = TextEditingController();
+  final TextEditingController categoryController = TextEditingController();
 
-  void _submitData() {
+  void _submitData() async {
     final String enteredAmount = amountController.text;
     final String enteredDescription = descriptionController.text;
+    String enteredCategory = categoryController.text;
 
     if (enteredAmount.isEmpty || enteredDescription.isEmpty) {
       return;
     }
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");
     final DateTime enteredDate = dateFormat.parse(dateController.text);
-
-    Transactions newTransaction = Transactions(enteredDate, double.parse(enteredAmount), enteredDescription);
+    List<String> CandidateLabels = [];
+    String sequenceToClassify = enteredDescription;
+    if (enteredCategory == "") {
+      enteredCategory = await getCategory(CandidateLabels, sequenceToClassify);
+    }
+    Transactions newTransaction = Transactions(enteredDate,
+        double.parse(enteredAmount), enteredDescription, enteredCategory);
 
     final Future? res = _db.addTransaction(newTransaction);
 
@@ -146,7 +153,8 @@ class _TransactionFormState extends State<TransactionForm> {
                   lastDate: DateTime(2100),
                 ).then((DateTime? value) {
                   if (value != null) {
-                    dateController.text = DateFormat("yyyy-MM-dd").format(value);
+                    dateController.text =
+                        DateFormat("yyyy-MM-dd").format(value);
                   }
                 });
               },
