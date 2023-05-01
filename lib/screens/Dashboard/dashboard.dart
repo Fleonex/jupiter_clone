@@ -42,7 +42,7 @@ class _DashboardState extends State<Dashboard> {
     double total = 0;
     snapshot.docs.forEach((doc) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        total += double.parse(data['amount']);
+      total += double.parse(data['amount']);
     });
     // print("\n\n\n\nThis is the total " + total.toString() + "\n");
     setState(() {
