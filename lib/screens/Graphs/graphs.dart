@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -15,7 +17,10 @@ class Graphs extends StatefulWidget {
 
 class _GraphsState extends State<Graphs> {
   List<Map<String, dynamic>> _transactions = [];
+  List<String> _categories = [];
+  Map<String, double> _categoryLimits = {};
   List<Widget> _monthlyCharts = [];
+  List<Widget> _monthlyCategoricalCharts = [];
   DateTime _startDate = DateTime(2000, 1, 1);
   DateTime _endDate = DateTime.now();
   final TextEditingController _startDateController = TextEditingController();
@@ -40,14 +45,28 @@ class _GraphsState extends State<Graphs> {
     });
     final List<Map<String, dynamic>>? res =
         await DatabaseService(uid: uid).getTransactions();
-    if (res == null) {
+    final List<Map<String, dynamic>>? categoriesRes =
+        await DatabaseService(uid: uid).getCategories();
+    if (res == null || categoriesRes == null) {
       setState(() {
         _isLoading = false;
       });
       return;
     }
+    List<String> categories = [];
+    Map<String, double> categoryLimits = {};
+
+    for (var data in categoriesRes) {
+      categoryLimits[data['category']] = data['limit'];
+    }
+
+    for (var data in categoriesRes) {
+      categories.add(data['category']);
+    }
     setState(() {
       _transactions = res;
+      _categories = categories;
+      _categoryLimits = categoryLimits;
       // print("Graphs $_transactions");
       _startDateController.text = DateFormat('dd-MM-yyyy').format(_startDate).toString();
       _endDateController.text = DateFormat('dd-MM-yyyy').format(_endDate).toString();
@@ -56,8 +75,33 @@ class _GraphsState extends State<Graphs> {
     _categorizedTransactions();
   }
 
+  List<Color> _getColors(int n) {
+    List<Color> colors = [];
+
+    int i = 0;
+    while(i < n) {
+      var generatedColor = Random().nextInt(Colors.primaries.length);
+      if (!colors.contains(Colors.primaries[generatedColor])) {
+        colors.add(Colors.primaries[generatedColor]);
+        i++;
+        continue;
+      }
+      generatedColor = Random().nextInt(Colors.accents.length);
+      if (!colors.contains(Colors.accents[generatedColor])) {
+        colors.add(Colors.accents[generatedColor]);
+        i++;
+        continue;
+      }
+      colors.add(Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0));
+    }
+
+    return colors;
+  }
+
   void _categorizedTransactions() {
     Map<String, List<_MonthlyExpenses>> monthlyExpenses = {};
+    Map<String, Map<String, List<_CategoricalExpense>>> categoricalExpenses = {};
+    List<Color> colors = _getColors(_categories.length);
     List<String> years = [];
 
     for (var data in _transactions) {
@@ -73,15 +117,21 @@ class _GraphsState extends State<Graphs> {
 
       if (monthlyExpenses[year] == null) {
         monthlyExpenses[year] = [];
+        categoricalExpenses[year] = {};
+
         years.add(year);
+
+        for(int i = 0; i < _categories.length; i++) {
+          categoricalExpenses[year]![month]!.add(_CategoricalExpense(_categories[i], 0, colors[i]));
+        }
         for (int i = 1; i <= 12; i++) {
           monthlyExpenses[year]!.add(_MonthlyExpenses(i.toString(), 0));
         }
       }
 
-      // print("Month $month Year $year Amount ${data['amount']}");
-
       monthlyExpenses[year]![int.parse(month) - 1].expenses += data['amount'];
+      String category = data['category'];
+      categoricalExpenses[year]![month]!.firstWhere((element) => element.category == category).expenses += data['amount'];
     }
 
     years.sort((a, b) => int.parse(a).compareTo(int.parse(b)));
@@ -114,15 +164,40 @@ class _GraphsState extends State<Graphs> {
       ));
     }
 
+    List<Widget> piecharts = [];
+    for(int i = 0; i < years.length; i++) {
+      for(int i = 1; i <= 12; i++) {
+        if (monthlyExpenses[years[i]]![i-1].expenses != 0) {
+          piecharts.add(SfCircularChart(
+            title: ChartTitle(text: 'Categorical Expenses in  $i,${years[i]}'),
+            legend: Legend(isVisible: true),
+            tooltipBehavior: TooltipBehavior(enable: true),
+            series: <CircularSeries<_CategoricalExpense, String>>[
+              PieSeries<_CategoricalExpense, String>(
+                dataSource: categoricalExpenses[years[i]]![i]!,
+                xValueMapper: (_CategoricalExpense expenses, _) => expenses.category,
+                yValueMapper: (_CategoricalExpense expenses, _) => expenses.expenses,
+                pointColorMapper: (_CategoricalExpense expenses, _) => expenses.color,
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
+                explode: true,
+                explodeGesture: ActivationMode.singleTap,
+              ),
+            ],
+          ));
+        }
+      }
+    }
+
     setState(() {
       _monthlyCharts = charts;
+      _monthlyCategoricalCharts = piecharts;
       _isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading ? SpinKitSpinningLines(color: purple):Scaffold(
+    return _isLoading ? const SpinKitSpinningLines(color: purple):Scaffold(
       appBar: AppBar(
         title: const Text("Graphs"),
         backgroundColor: purple,
@@ -236,6 +311,19 @@ class _GraphsState extends State<Graphs> {
                     children: _monthlyCharts.reversed.toList(),
                   ),
                 ),
+          const SizedBox(height: 20),
+          (_monthlyCategoricalCharts.isEmpty) ?
+            const Center(child: Text("No data to display")) :
+            SizedBox(
+              height: 300,
+              child: PageView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                clipBehavior: Clip.none,
+                reverse: true,
+                children: _monthlyCategoricalCharts.reversed.toList(),
+              ),
+            ),
         ],
       ),
     );
@@ -247,4 +335,12 @@ class _MonthlyExpenses {
   double expenses;
 
   _MonthlyExpenses(this.month, this.expenses);
+}
+
+class _CategoricalExpense {
+  String category;
+  double expenses;
+  final Color color;
+
+  _CategoricalExpense(this.category, this.expenses, this.color);
 }
