@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:jupiter_clone/screens/forms/transaction_form.dart';
 import 'package:jupiter_clone/screens/Budget/budget.dart';
@@ -28,6 +29,7 @@ class _DashboardState extends State<Dashboard> {
   final String uid = FirebaseAuth.instance.currentUser!.uid;
   double _totalExpenses = 0;
   late List<Widget> _widgetList = [];
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -36,6 +38,11 @@ class _DashboardState extends State<Dashboard> {
   }
 
   void _fetchData() async {
+
+    setState(() {
+      _isLoading = true;
+    });
+
     List<Map<String, dynamic>>? snapshot = await DatabaseService(uid: uid).getTransactions();
     // print("This is the snapshot $snapshot");
     // List<Widget> list = [];
@@ -47,6 +54,11 @@ class _DashboardState extends State<Dashboard> {
         _totalExpenses = total;
         _widgetList = [];
       });
+
+      setState(() {
+        _isLoading = false;
+      });
+
       return;
     }
 
@@ -71,13 +83,14 @@ class _DashboardState extends State<Dashboard> {
     setState(() {
       _totalExpenses = total;
       _widgetList = list.reversed.toList();
+      _isLoading = false;
     });
     // dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isLoading ? SpinKitSpinningLines(color: purple) : Scaffold(
       backgroundColor: softBlue,
       body: ListView(
         children: [
