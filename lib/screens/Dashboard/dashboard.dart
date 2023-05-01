@@ -41,7 +41,7 @@ class _DashboardState extends State<Dashboard> {
 
   void _fetchData() async {
     List<Map<String, dynamic>>? snapshot = await DatabaseService(uid: uid).getTransactions();
-    print("This is the snapshot $snapshot");
+    // print("This is the snapshot $snapshot");
     // List<Widget> list = [];
     double total = 0;
 
@@ -76,7 +76,7 @@ class _DashboardState extends State<Dashboard> {
       _totalExpenses = total;
       _widgetList = list.reversed.toList();
     });
-
+    // dispose();
   }
 
   Widget build(BuildContext context) {

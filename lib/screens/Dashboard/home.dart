@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jupiter_clone/screens/Dashboard/dashboard.dart';
 import 'package:jupiter_clone/style/color.dart';
 
+import '../Graphs/graphs.dart';
 import '../Profile/profile.dart';
 
 class Home extends StatefulWidget {
@@ -16,7 +17,7 @@ class _HomeState extends State<Home> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
-    Placeholder(),
+    Graphs(),
     Placeholder(),
     ProfilePage(),
   ];
