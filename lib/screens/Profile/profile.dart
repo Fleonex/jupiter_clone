@@ -139,11 +139,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset('assets/images/user_photo.png',
-                                height: 150),
+                                height: 100),
                             const SizedBox(
-                              width: 6,
+                              width: 12,
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
