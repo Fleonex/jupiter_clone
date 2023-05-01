@@ -46,7 +46,7 @@ class _SignUpFormState extends State<SignUpForm> {
               child: TextFormField(
                 controller: _passwordController,
                 textInputAction: TextInputAction.done,
-                obscureText: true,
+                obscureText: !_showPassword,
                 cursorColor: kPrimaryColor,
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
