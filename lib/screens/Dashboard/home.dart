@@ -4,7 +4,7 @@ import 'package:jupiter_clone/style/color.dart';
 
 import '../Graphs/graphs.dart';
 import '../Profile/profile.dart';
-
+import '../Budget/budget.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   static const List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
     Graphs(),
-    Placeholder(),
+    BudgetingPage(),
     ProfilePage(),
   ];
 

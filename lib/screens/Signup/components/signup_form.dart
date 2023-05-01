@@ -47,7 +47,7 @@ class _SignUpFormState extends State<SignUpForm> {
               textInputAction: TextInputAction.done,
               obscureText: true,
               cursorColor: kPrimaryColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
@@ -59,14 +59,18 @@ class _SignUpFormState extends State<SignUpForm> {
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
             onPressed: () async {
-              print("This is email " + _emailController.text + "\n");
-              print("This is password " + _passwordController.text + "\n");
-              var authClass = new AuthService();
+              // print("This is email " + _emailController.text + "\n");
+              // print("This is password " + _passwordController.text + "\n");
+              var authClass = AuthService();
               var currentUser = authClass.createUserWithEmailAndPassword(
                   email: _emailController.text,
                   password: _passwordController.text);
+
+              if (currentUser != null) {
+                Navigator.of(context).pop();
+              }
               // var currentUser = "Hello World";
-              print("The current User is " + currentUser.toString());
+              // print("The current User is " + currentUser.toString());
             },
             child: Text("Sign Up".toUpperCase()),
           ),

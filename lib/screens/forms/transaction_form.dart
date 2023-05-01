@@ -60,7 +60,7 @@ class _TransactionFormState extends State<TransactionForm> {
       );
       Navigator.of(context).pop();
     } else {
-      if (mounted) {
+      if (!mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Error adding transaction'),
@@ -201,7 +201,6 @@ class _TransactionFormState extends State<TransactionForm> {
             DropdownButtonFormField<String>(
               value: _selectedCategory,
               decoration: const InputDecoration(
-                labelText: 'Category',
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.category),

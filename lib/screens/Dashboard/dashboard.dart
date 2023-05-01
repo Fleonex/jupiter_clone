@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jupiter_clone/screens/forms/transaction_form.dart';
+import 'package:jupiter_clone/screens/Budget/budget.dart';
 import 'package:jupiter_clone/services/database.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
@@ -100,9 +101,9 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Row(
                     children: [
-                      Image.asset('assets/images/user_photo.png', height: 50),
+                      Image.asset('assets/images/user_photo.png', height: 60),
                       const SizedBox(
-                        width: 12,
+                        width: 10,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

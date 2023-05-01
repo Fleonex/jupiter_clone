@@ -5,6 +5,7 @@ import 'package:jupiter_clone/screens/Dashboard/home.dart';
 import 'package:jupiter_clone/screens/Login/login_screen.dart';
 import 'package:jupiter_clone/style/constants.dart';
 import 'package:jupiter_clone/screens/Splash/splash.dart';
+import 'package:flutter/services.dart';
 
 
 void main() async {
@@ -18,6 +19,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Auth',
