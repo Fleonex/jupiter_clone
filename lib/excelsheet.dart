@@ -23,42 +23,10 @@ class _uploadFileState extends State<uploadFile> {
     return ElevatedButton(
       child: const Text("Upload File"),
       onPressed: () {
-        _pickFile();
+
       },
     );
   }
 
-  void _pickFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
-    if (result == null) return;
-    print("This is the name of the file you picked!" + result.files.first.name);
-    filePath = result.files.first.path!;
-    if (filePath != null) {
-      var bytes = File(filePath.toString()).readAsBytesSync();
-      var excel = Excel.decodeBytes(bytes);
-      List<List<String>> rows = [];
-      for (var table in excel.tables.keys) {
-        print(table); //sheet Name
-        print(excel.tables[table]!.maxCols);
-        print(excel.tables[table]!.maxRows);
-        bool first = true;
-        for (var row in excel.tables[table]!.rows) {
-          List<String> rowList = [];
-          for (var cell in row) {
-            rowList.add(cell!.value.toString());
-          }
-          if (!first) {
-            
-            // await Database().addTransaction(rowList[0], rowList[1], rowList[2]);
-            rows.add(rowList);
-          } else {
-            first = false;
-          }
-        }
-        setState(() {
-          _data = rows;
-        });
-      }
-    }
-  }
+
 }

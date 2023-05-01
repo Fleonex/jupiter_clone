@@ -4,6 +4,22 @@ import 'package:jupiter_clone/services/auth.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
 import '../Settings/Settings.dart';
+import 'package:excel/excel.dart';
+import 'package:path/path.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:jupiter_clone/category.dart';
+import 'package:jupiter_clone/services/database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:jupiter_clone/services/database.dart';
+import 'package:jupiter_clone/style/color.dart';
+import '../../models/transactions.dart';
+import '../../style/constants.dart';
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -12,6 +28,70 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final DatabaseService _db = DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
+  void _pickFile() async {
+    String filePath;
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if (result == null) return;
+    print("This is the name of the file you picked!" + result.files.first.name);
+    filePath = result.files.first.path!;
+    if (filePath != null) {
+      var bytes = File(filePath.toString()).readAsBytesSync();
+      var excel = Excel.decodeBytes(bytes);
+      List<List<String>> rows = [];
+      for (var table in excel.tables.keys) {
+        print(table); //sheet Name
+        print(excel.tables[table]!.maxCols);
+        print(excel.tables[table]!.maxRows);
+        bool first = true;
+        for (var row in excel.tables[table]!.rows) {
+          List<String> rowList = [];
+          for (var cell in row) {
+            rowList.add(cell!.value.toString());
+          }
+          if (!first) {
+            String gotCategory = "";
+            if(rowList[3] == ""){
+              gotCategory = "Food";
+              // gotCategory =  await getCategory(["transportation","food","beauty"], rowList[2]);
+              print("The category of this " + rowList[2].toString() +" "+ gotCategory + "\n");
+            }
+            else{
+              gotCategory = rowList[3].toString();
+            }
+            final String enteredAmount = rowList[1].toString();
+            final String enteredDescription = rowList[2].toString();
+            final String selectedCategory = gotCategory;
+            DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+            final DateTime enteredDate = dateFormat.parse(rowList[0].toString().substring(0,10));
+            Transactions newTransaction = Transactions(enteredDate, double.parse(enteredAmount), enteredDescription, selectedCategory!);
+
+            await  _db.addTransaction(newTransaction);
+            // if (res != null) {
+            //   ScaffoldMessenger.of(context).showSnackBar(
+            //     const SnackBar(
+            //       content: Text('Transaction added successfully'),
+            //     ),
+            //   );
+            //   Navigator.of(context).pop();
+            // } else {
+            //   if (mounted) {
+            //     ScaffoldMessenger.of(context).showSnackBar(
+            //       const SnackBar(
+            //         content: Text('Error adding transaction'),
+            //       ),
+            //     );
+            //   }
+            // }
+            // await Database().addTransaction(rowList[0], rowList[1], rowList[2]);
+            rows.add(rowList);
+          } else {
+            first = false;
+          }
+        }
+      }
+    }
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: softBlue,
@@ -102,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   GestureDetector(
                     onTap: () {
-
+                        _pickFile();
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
