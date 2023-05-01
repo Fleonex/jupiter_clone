@@ -136,7 +136,13 @@ class _DashboardState extends State<Dashboard> {
                       Row(
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => (),
+                                ),
+                              );
+                            },
                             icon: Image.asset('assets/icons/ic_bell.png',
                                 height: 20),
                           ),
