@@ -20,23 +20,35 @@ class _TransactionFormState extends State<TransactionForm> {
   final DatabaseService _db = DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
 
   final TextEditingController amountController = TextEditingController();
-
+  final TextEditingController newCategoryController = TextEditingController();
   final TextEditingController descriptionController =
   TextEditingController();
 
   final TextEditingController dateController = TextEditingController();
+  String? _selectedCategory = 'Food'; // default category
 
+  final List<String> _categories = ['Food', 'Transportation', 'Rent', 'Utilities', 'None'];
+  bool isNewCategoryEnabled = true;
+  String newCategory='';
   void _submitData() {
     final String enteredAmount = amountController.text;
     final String enteredDescription = descriptionController.text;
 
-    if (enteredAmount.isEmpty || enteredDescription.isEmpty) {
+
+    String selectedCategory = _selectedCategory!; // default category value
+    if (isNewCategoryEnabled) {
+      newCategory = newCategoryController.text;
+      if (newCategory.isNotEmpty) {
+        selectedCategory = newCategory;
+      }
+    }
+    if (enteredAmount.isEmpty || enteredDescription.isEmpty || _selectedCategory == null) {
       return;
     }
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");
     final DateTime enteredDate = dateFormat.parse(dateController.text);
 
-    Transactions newTransaction = Transactions(enteredDate, double.parse(enteredAmount), enteredDescription);
+    Transactions newTransaction = Transactions(enteredDate, double.parse(enteredAmount), enteredDescription, selectedCategory!);
 
     final Future? res = _db.addTransaction(newTransaction);
 
@@ -57,7 +69,41 @@ class _TransactionFormState extends State<TransactionForm> {
       }
     }
   }
+  void showNewCategoryDialog() async {
+    final categoryName = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('New category'),
+        content: TextField(
+          controller: newCategoryController,
+          decoration: InputDecoration(
+            hintText: 'Enter category name',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context, newCategoryController.text.trim());
+            },
+            child: Text('Save'),
+          ),
+        ],
+      ),
+    );
 
+    if (categoryName != null && categoryName.isNotEmpty) {
+      setState(() {
+        _categories.add(categoryName);
+        _selectedCategory = categoryName;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,6 +197,50 @@ class _TransactionFormState extends State<TransactionForm> {
                 });
               },
             ),
+            const SizedBox(height: 10.0 ),
+            DropdownButtonFormField<String>(
+              value: _selectedCategory,
+              decoration: const InputDecoration(
+                labelText: 'Category',
+                prefixIcon: Padding(
+                  padding: EdgeInsets.all(defaultPadding),
+                  child: Icon(Icons.category),
+                ),
+              ),
+              items: [
+                for (var category in _categories)
+                  DropdownMenuItem(
+                    value: category,
+                    child: Text(category)
+                  ),
+                DropdownMenuItem(
+                  value: newCategory,
+                  child: Row(
+                    children: [
+                      Icon(Icons.add, color: lightPurple),
+                      const SizedBox(width: 8),
+                      Text('New category', style: TextStyle(color: darkGray)),
+                    ],
+                  ),
+                ),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  _selectedCategory = value;
+                  if (_selectedCategory == newCategory) {
+                    // Prompt the user to enter a new category
+                    showNewCategoryDialog();
+                  }
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please select a category';
+                }
+                return null;
+              },
+            ),
+
             const SizedBox(height: 10.0),
             Hero(
               tag: "login_btn",
