@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -23,6 +24,7 @@ class _GraphsState extends State<Graphs> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final String uid = FirebaseAuth.instance.currentUser!.uid;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -33,9 +35,15 @@ class _GraphsState extends State<Graphs> {
 
   void _fetchData() async {
     // dispose();
+    setState(() {
+      _isLoading = true;
+    });
     final List<Map<String, dynamic>>? res =
         await DatabaseService(uid: uid).getTransactions();
     if (res == null) {
+      setState(() {
+        _isLoading = false;
+      });
       return;
     }
     setState(() {
@@ -83,6 +91,7 @@ class _GraphsState extends State<Graphs> {
     if (years.isEmpty) {
       setState(() {
         _monthlyCharts = [];
+        _isLoading = false;
       });
       return;
     }
@@ -107,12 +116,13 @@ class _GraphsState extends State<Graphs> {
 
     setState(() {
       _monthlyCharts = charts;
+      _isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isLoading ? SpinKitSpinningLines(color: purple):Scaffold(
       appBar: AppBar(
         title: const Text("Graphs"),
         backgroundColor: purple,
