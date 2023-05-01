@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jupiter_clone/style/color.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../services/database.dart';
 
@@ -112,83 +113,104 @@ class _GraphsState extends State<Graphs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Graphs"),
+        backgroundColor: purple,
+      ),
+
+
       body: ListView(
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(
+              height: 20
+          ),
           // Create a date range picker.
           Form(
             key: _formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: _startDateController,
-                  decoration: const InputDecoration(
-                    labelText: 'Start Date',
-                    hintText: 'Enter the start date',
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      controller: _startDateController,
+                      decoration: const InputDecoration(
+                        labelText: 'Start Date',
+                        hintText: 'Enter the start date',
+                      ),
+
+                      onTap: () async {
+                        // Below line stops keyboard from appearing
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        // Show Date Picker Here
+                        DateTime? date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2010),
+                          lastDate: DateTime(2050),
+                        );
+
+                        if (date!.isAfter(_endDate)) {
+                          if (mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Start date cannot be after end date"),
+                            ),
+                          );
+                          return;
+                        }
+
+                        setState(() {
+                          _startDate = date!;
+                          _startDateController.text = DateFormat('dd-MM-yyyy').format(_startDate).toString();
+                          _categorizedTransactions();
+                        });
+                      },
+                    ),
                   ),
-                  onTap: () async {
-                    // Below line stops keyboard from appearing
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    // Show Date Picker Here
-                    DateTime? date = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2010),
-                      lastDate: DateTime(2050),
-                    );
-
-                    if (date!.isAfter(_endDate)) {
-                      if (mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Start date cannot be after end date"),
-                        ),
-                      );
-                      return;
-                    }
-
-                    setState(() {
-                      _startDate = date!;
-                      _startDateController.text = DateFormat('dd-MM-yyyy').format(_startDate).toString();
-                      _categorizedTransactions();
-                    });
-                  },
-                ),
-                TextFormField(
-                  controller: _endDateController,
-                  decoration: const InputDecoration(
-                    labelText: 'End Date',
-                    hintText: 'Enter the end date',
+                  const SizedBox(
+                      height: 10
                   ),
-                  onTap: () async {
-                    // Below line stops keyboard from appearing
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    // Show Date Picker Here
-                    DateTime? date = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2010),
-                      lastDate: DateTime(2050),
-                    );
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextFormField(
+                      controller: _endDateController,
+                      decoration: const InputDecoration(
+                        labelText: 'End Date',
+                        hintText: 'Enter the end date',
+                      ),
+                      onTap: () async {
+                        // Below line stops keyboard from appearing
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        // Show Date Picker Here
+                        DateTime? date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2010),
+                          lastDate: DateTime(2050),
+                        );
 
-                    if (date!.isBefore(_startDate)) {
-                      if (mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("End date cannot be before start date"),
-                        ),
-                      );
-                      return;
-                    }
+                        if (date!.isBefore(_startDate)) {
+                          if (mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("End date cannot be before start date"),
+                            ),
+                          );
+                          return;
+                        }
 
-                    setState(() {
-                      _endDate = date!;
-                      _endDateController.text = DateFormat('dd-MM-yyyy').format(_endDate).toString();
-                      _categorizedTransactions();
-                    });
-                  },
-                ),
-              ],
+                        setState(() {
+                          _endDate = date!;
+                          _endDateController.text = DateFormat('dd-MM-yyyy').format(_endDate).toString();
+                          _categorizedTransactions();
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 20),
