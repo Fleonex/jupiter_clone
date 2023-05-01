@@ -34,6 +34,7 @@ class DatabaseService with ChangeNotifier{
 
     for (var doc in snapshot.docs) {
       categories.add(doc.data());
+      categories[categories.length - 1]['category'] = doc.id;
     }
 
     return categories;

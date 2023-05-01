@@ -152,7 +152,7 @@ class _GraphsState extends State<Graphs> {
                         );
 
                         if (date!.isAfter(_endDate)) {
-                          if (mounted) return;
+                          if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Start date cannot be after end date"),
@@ -192,7 +192,7 @@ class _GraphsState extends State<Graphs> {
                         );
 
                         if (date!.isBefore(_startDate)) {
-                          if (mounted) return;
+                          if (!mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("End date cannot be before start date"),
