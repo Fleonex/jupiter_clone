@@ -40,6 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _pickFile() async {
+    await _getStoragePermission();
     String filePath;
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result == null) return;
