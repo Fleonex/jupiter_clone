@@ -157,14 +157,15 @@ class _DashboardState extends State<Dashboard> {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ..._widgetList
-                ]
-              ),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                ..._widgetList
+              ]
             ),
+          ),
+          const SizedBox(
+            height: 20
           ),
         ],
       ),
@@ -179,7 +180,6 @@ class _DashboardState extends State<Dashboard> {
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.add),
-
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:jupiter_clone/util/default_categories.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -43,6 +44,12 @@ class AuthService {
         'noOfTransactions': 0,
       });
 
+      for(var cat in DefaultCategories.categories) {
+        _usersCollectionReference.doc(user.uid).collection('Categories').doc(cat).set({
+          'limit': DefaultCategories.limits[cat],
+        });
+      }
+
       return user;
     } catch (e) {
       // print("I got this error $e\n");
@@ -74,6 +81,12 @@ class AuthService {
           'totalExpenses': 0,
           'noOfTransactions': 0,
         });
+
+        for(var cat in DefaultCategories.categories) {
+          _usersCollectionReference.doc(user.uid).collection('Categories').doc(cat).set({
+            'limit': DefaultCategories.limits[cat],
+          });
+        }
       }
 
       return user;
