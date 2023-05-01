@@ -100,7 +100,7 @@ class _GraphsState extends State<Graphs> {
 
   void _categorizedTransactions() {
     Map<String, List<_MonthlyExpenses>> monthlyExpenses = {};
-    Map<String, Map<String, List<_CategoricalExpense>>> categoricalExpenses = {};
+    Map<String, List<List<_CategoricalExpense>>> categoricalExpenses = {};
     List<Color> colors = _getColors(_categories.length);
     List<String> years = [];
 
@@ -117,21 +117,25 @@ class _GraphsState extends State<Graphs> {
 
       if (monthlyExpenses[year] == null) {
         monthlyExpenses[year] = [];
-        categoricalExpenses[year] = {};
-
+        categoricalExpenses[year] = [];
         years.add(year);
 
-        for(int i = 0; i < _categories.length; i++) {
-          categoricalExpenses[year]![month]!.add(_CategoricalExpense(_categories[i], 0, colors[i]));
-        }
         for (int i = 1; i <= 12; i++) {
           monthlyExpenses[year]!.add(_MonthlyExpenses(i.toString(), 0));
+          categoricalExpenses[year]!.add([]);
+        }
+
+        for (int i = 0; i < _categories.length; i++) {
+          for (int j = 0; j < 12; j++) {
+            categoricalExpenses[year]![j].add(_CategoricalExpense(_categories[i], 0, colors[i]));
+          }
         }
       }
 
       monthlyExpenses[year]![int.parse(month) - 1].expenses += data['amount'];
       String category = data['category'];
-      categoricalExpenses[year]![month]!.firstWhere((element) => element.category == category).expenses += data['amount'];
+      print("$category ${categoricalExpenses[year]![int.parse(month) - 1]!.firstWhere((element) => element.category == category).category}");
+      categoricalExpenses[year]![int.parse(month) - 1]!.firstWhere((element) => element.category == category).expenses += data['amount'];
     }
 
     years.sort((a, b) => int.parse(a).compareTo(int.parse(b)));
@@ -163,18 +167,18 @@ class _GraphsState extends State<Graphs> {
         ],
       ));
     }
-
     List<Widget> piecharts = [];
     for(int i = 0; i < years.length; i++) {
-      for(int i = 1; i <= 12; i++) {
-        if (monthlyExpenses[years[i]]![i-1].expenses != 0) {
+      for(int j = 1; j <= 12; j++) {
+        if (categoricalExpenses[years[i]]![j-1].isNotEmpty && monthlyExpenses[years[i]]![j-1].expenses > 0) {
+          // print("Categorical Expenses ${categoricalExpenses[years[i]]![j]}");
           piecharts.add(SfCircularChart(
-            title: ChartTitle(text: 'Categorical Expenses in  $i,${years[i]}'),
+            title: ChartTitle(text: 'Categorical Expenses in  $j,${years[i]}'),
             legend: Legend(isVisible: true),
             tooltipBehavior: TooltipBehavior(enable: true),
             series: <CircularSeries<_CategoricalExpense, String>>[
               PieSeries<_CategoricalExpense, String>(
-                dataSource: categoricalExpenses[years[i]]![i]!,
+                dataSource: categoricalExpenses[years[i]]![j-1],
                 xValueMapper: (_CategoricalExpense expenses, _) => expenses.category,
                 yValueMapper: (_CategoricalExpense expenses, _) => expenses.expenses,
                 pointColorMapper: (_CategoricalExpense expenses, _) => expenses.color,
