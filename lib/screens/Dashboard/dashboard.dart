@@ -8,6 +8,8 @@ import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
 import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart'
 as transaction_file;
+import 'package:jupiter_clone/screens/Notification/notification.dart' as notificationfile;
+
 class Dashboard extends StatefulWidget {
   @override
   _DashboardState createState() => _DashboardState();
@@ -137,11 +139,11 @@ class _DashboardState extends State<Dashboard> {
                         children: [
                           IconButton(
                             onPressed: () {
-                              // Navigator.of(context).push(
-                              //   MaterialPageRoute(
-                              //     builder: (context) => (),
-                              //   ),
-                              // );
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => (notificationfile.Notification()),
+                                ),
+                              );
                             },
                             icon: Image.asset('assets/icons/ic_bell.png',
                                 height: 20),

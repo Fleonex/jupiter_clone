@@ -63,7 +63,10 @@ class _NotificationState extends State<Notification> {
     }
 
     for (int i = 0; i < budgetSnapShot!.length; i++) {
-      if (allExpenses[budgetSnapShot[i]['category'].toString()]! >
+      if(allExpenses[budgetSnapShot[i]['category']] == null){
+        allExpenses[budgetSnapShot[i]['category']] = 0.0;
+      }
+      if (allExpenses[budgetSnapShot[i]['category']]! >
           budgetSnapShot[i]['limit']) {
         double difference =
             allExpenses[budgetSnapShot[i]['category'].toString()]! -
