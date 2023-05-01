@@ -21,12 +21,13 @@ class _uploadFileState extends State<uploadFile> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: const Text("Upload FIle"),
+      child: const Text("Upload File"),
       onPressed: () {
         _pickFile();
       },
     );
   }
+
   void _pickFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result == null) return;
@@ -47,6 +48,7 @@ class _uploadFileState extends State<uploadFile> {
             rowList.add(cell!.value.toString());
           }
           if (!first) {
+            
             // await Database().addTransaction(rowList[0], rowList[1], rowList[2]);
             rows.add(rowList);
           } else {
