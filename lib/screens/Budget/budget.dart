@@ -12,11 +12,6 @@ class BudgetingPage extends StatefulWidget {
 }
 
 class _BudgetingPageState extends State<BudgetingPage> {
-  // Default budget values
-  double _foodBudget = 500.0;
-  double _housingBudget = 1000.0;
-  double _transportBudget = 300.0;
-
   final String uid = FirebaseAuth.instance.currentUser!.uid;
   List<Widget> _categoryLimit = [];
 
@@ -41,10 +36,10 @@ class _BudgetingPageState extends State<BudgetingPage> {
     }
 
     setState(() {
-      print(res);
+      // print(res);
       for(var data in res!) {
         categories.add(_Categories(data['category'], data['limit']));
-        print(data);
+        // print(data);
       }
     });
 
