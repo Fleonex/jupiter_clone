@@ -33,7 +33,6 @@ class _DashboardState extends State<Dashboard> {
   bool _isLoading = false;
   String email = FirebaseAuth.instance.currentUser!.email.toString();
 
-
   @override
   void initState() {
     super.initState();
@@ -76,8 +75,8 @@ class _DashboardState extends State<Dashboard> {
       list.add(
         transaction_file.Transaction(
           amount: data['amount'].toString(),
-          date: DateFormat('dd MMM yyyy').format(date).toString(),
-          description: data['description'],
+          description: DateFormat('dd MMM yyyy').format(date).toString(),
+          date: data['category'],
         )
       );
     }

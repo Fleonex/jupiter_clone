@@ -13,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import '../../models/transactions.dart';
+import 'package:jupiter_clone/category.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -22,7 +23,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final DatabaseService _db = DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
+  final DatabaseService _db =
+      DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
   bool permissionGranted = false;
   String email = FirebaseAuth.instance.currentUser!.email.toString();
 
@@ -66,27 +68,29 @@ class _ProfilePageState extends State<ProfilePage> {
           if (!first) {
             String gotCategory = "";
             List<String> cats = [];
-            for(int i = 0; i < res.length; i++){
+            for (int i = 0; i < res.length; i++) {
               cats.add(res[i]["category"]);
             }
-            if(rowList[3] == ""){
-              gotCategory = res[0]["category"];
+            if (rowList[3] == "") {
+              // gotCategory = res[0]["category"];
 
-              // gotCategory =  await getCategory(cats, rowList[2]);
-              // print("The category of this " + rowList[2].toString() +" "+ gotCategory + "\n");
-            }
-            else{
-
+              gotCategory = await getCategory(cats, rowList[2]);
+              print("The category of this " +
+                  rowList[2].toString() +
+                  " " +
+                  gotCategory +
+                  "\n");
+            } else {
               gotCategory = rowList[3].toString();
               bool found = false;
-              for(int i = 0;i<cats.length;i++){
-                if(cats[i].toLowerCase() == gotCategory.toLowerCase()){
+              for (int i = 0; i < cats.length; i++) {
+                if (cats[i].toLowerCase() == gotCategory.toLowerCase()) {
                   found = true;
                   gotCategory = cats[i];
                   break;
                 }
               }
-              if(!found){
+              if (!found) {
                 await _db.addCategory(gotCategory, 10000);
               }
             }
@@ -94,10 +98,15 @@ class _ProfilePageState extends State<ProfilePage> {
             final String enteredDescription = rowList[2].toString();
             final String selectedCategory = gotCategory;
             DateFormat dateFormat = DateFormat("yyyy-MM-dd");
-            final DateTime enteredDate = dateFormat.parse(rowList[0].toString().substring(0,10));
-            Transactions newTransaction = Transactions(enteredDate, double.parse(enteredAmount), enteredDescription, selectedCategory!);
+            final DateTime enteredDate =
+                dateFormat.parse(rowList[0].toString().substring(0, 10));
+            Transactions newTransaction = Transactions(
+                enteredDate,
+                double.parse(enteredAmount),
+                enteredDescription,
+                selectedCategory!);
 
-            await  _db.addTransaction(newTransaction);
+            await _db.addTransaction(newTransaction);
 
             rows.add(rowList);
           } else {
@@ -107,6 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
       }
     }
   }
+
   Widget build(BuildContext context) {
     _getStoragePermission();
     return Scaffold(
@@ -325,7 +335,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.power_settings_new, color: red, size: 30),
+                        const Icon(Icons.power_settings_new,
+                            color: red, size: 30),
                         const SizedBox(
                           width: 12,
                         ),
