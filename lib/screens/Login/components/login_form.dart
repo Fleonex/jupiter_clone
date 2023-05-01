@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:jupiter_clone/components/already_have_an_account_acheck.dart';
-import 'package:jupiter_clone/screens/Dashboard/dashboard.dart';
-import 'package:jupiter_clone/screens/Dashboard/home.dart';
 import 'package:jupiter_clone/style/constants.dart';
 import '../../Signup/signup_screen.dart';
 
@@ -17,16 +15,16 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   String _email = "";
   String _password = "";
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formkey,
+      key: _formKey,
       child: Column(
         children: [
           TextFormField(
@@ -69,10 +67,12 @@ class _LoginFormState extends State<LoginForm> {
             tag: "login_btn",
             child: ElevatedButton(
               onPressed: () async {
-                if (_formkey.currentState!.validate()) {
-                  _formkey.currentState!.save();
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
                   dynamic result = await AuthService().signInWithEmailAndPassword(_email, _password);
                   if (result == null) {
+                    if (mounted) return;
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text("Invalid Credentials"),
@@ -93,7 +93,7 @@ class _LoginFormState extends State<LoginForm> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return SignUpScreen();
+                    return const SignUpScreen();
                   },
                 ),
               );

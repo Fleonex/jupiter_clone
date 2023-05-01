@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
-
 import '../../services/database.dart';
 
 class Graphs extends StatefulWidget {
@@ -55,10 +53,10 @@ class _GraphsState extends State<Graphs> {
 
     for (var data in _transactions) {
       DateTime date = data['date'].toDate();
-      print(date);
-      print(date.isBefore(_startDate));
+      // print(date);
+      // print(date.isBefore(_startDate));
       if (date.isBefore(_startDate) || date.isAfter(_endDate)) {
-        print("Date $date is not in range ${_startDate} - ${_endDate}");
+        // print("Date $date is not in range ${_startDate} - ${_endDate}");
         continue;
       }
       String year = date.year.toString();
@@ -72,14 +70,14 @@ class _GraphsState extends State<Graphs> {
         }
       }
 
-      print("Month $month Year $year Amount ${data['amount']}");
+      // print("Month $month Year $year Amount ${data['amount']}");
 
       monthlyExpenses[year]![int.parse(month) - 1].expenses += data['amount'];
     }
 
     years.sort((a, b) => int.parse(a).compareTo(int.parse(b)));
 
-    print(years.length);
+    // print(years.length);
 
     if (years.isEmpty) {
       setState(() {

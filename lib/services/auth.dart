@@ -19,7 +19,7 @@ class AuthService {
       return user;
     } catch (e) {
 
-      print("I got this error $e\n");
+      // print("I got this error $e\n");
       return null;
     }
   }
@@ -45,7 +45,7 @@ class AuthService {
 
       return user;
     } catch (e) {
-      print("I got this error $e\n");
+      // print("I got this error $e\n");
       return null;
     }
   }

@@ -26,7 +26,7 @@ class DatabaseService with ChangeNotifier{
 
       return Future.value(true);
     } catch (e) {
-      print("An error occured ,this is the error $e");
+      // print("An error occurred ,this is the error $e");
       return null;
     }
   }
