@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jupiter_clone/style/color.dart';
 
 class BudgetingPage extends StatefulWidget {
   const BudgetingPage({Key? key}) : super(key: key);
@@ -19,35 +18,24 @@ class _BudgetingPageState extends State<BudgetingPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Budgeting'),
-        backgroundColor: purple,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Set your monthly budget for each category:',
-                style: TextStyle(fontSize: 16.0),
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.ellipsis,
-            ),
+            Text('Set your monthly budget for each category:'),
             SizedBox(height: 16.0),
             _buildCategoryBudgetRow('Food', _foodBudget, (value) {
               setState(() {
                 _foodBudget = value as double;
               });
             }),
-            SizedBox(
-              height: 10.0,
-            ),
             _buildCategoryBudgetRow('Housing', _housingBudget, (value) {
               setState(() {
                 _housingBudget = value as double;
               });
             }),
-            SizedBox(
-              height: 10.0,
-            ),
             _buildCategoryBudgetRow('Transport', _transportBudget, (value) {
               setState(() {
                 _transportBudget = value as double;
