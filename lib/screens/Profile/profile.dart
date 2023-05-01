@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:jupiter_clone/services/auth.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../Settings/Settings.dart';
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
@@ -22,6 +23,22 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final DatabaseService _db = DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
+  bool permissionGranted = false;
+
+  Future _getStoragePermission() async {
+    if (await Permission.storage.request().isGranted) {
+      setState(() {
+        permissionGranted = true;
+      });
+    } else if (await Permission.storage.request().isPermanentlyDenied) {
+      await openAppSettings();
+    } else if (await Permission.storage.request().isDenied) {
+      setState(() {
+        permissionGranted = false;
+      });
+    }
+  }
+
   void _pickFile() async {
     String filePath;
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
@@ -89,6 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
   Widget build(BuildContext context) {
+    _getStoragePermission();
     return Scaffold(
       backgroundColor: softBlue,
       body: Column(
