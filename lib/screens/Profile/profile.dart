@@ -24,6 +24,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final DatabaseService _db = DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
   bool permissionGranted = false;
+  String email = FirebaseAuth.instance.currentUser!.email.toString();
 
   Future _getStoragePermission() async {
     if (await Permission.storage.request().isGranted) {
@@ -155,7 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   style: subTitle,
                                 ),
                                 Text(
-                                  'Kang Smile',
+                                  email,
                                   style: headerWhite,
                                 ),
                               ],

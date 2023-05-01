@@ -29,6 +29,8 @@ class _DashboardState extends State<Dashboard> {
   double _totalExpenses = 0;
   late List<Widget> _widgetList = [];
   bool _isLoading = false;
+  String email = FirebaseAuth.instance.currentUser!.email.toString();
+
 
   @override
   void initState() {
@@ -113,7 +115,7 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Row(
                     children: [
-                      Image.asset('assets/images/user_photo.png', height: 60),
+                      Image.asset('assets/images/user_photo.png', height: 50),
                       const SizedBox(
                         width: 10,
                       ),
@@ -125,7 +127,7 @@ class _DashboardState extends State<Dashboard> {
                             style: subTitle,
                           ),
                           Text(
-                            'Kang Smile',
+                            email,
                             style: headerWhite,
                           ),
                         ],

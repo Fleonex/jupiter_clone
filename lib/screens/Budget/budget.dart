@@ -57,6 +57,7 @@ class _BudgetingPageState extends State<BudgetingPage> {
           category.budget = double.parse(value);
         });
       }));
+
     }
 
     setState(() {
