@@ -9,6 +9,54 @@ class DatabaseService with ChangeNotifier{
   // collection reference
   final CollectionReference _userCollection = FirebaseFirestore.instance.collection('users');
 
+  Future? addCategory(String category, double limit) async {
+    try {
+      Map<String, dynamic> categoryData = {
+        'category': category,
+        'limit': limit,
+      };
+
+      _userCollection.doc(uid).collection('categories').doc(category).set({
+        'limit': limit,
+      });
+
+      return Future.value(true);
+    } catch (e) {
+      // print("An error occurred ,this is the error $e");
+      return null;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>>? getCategories() async{
+    List<Map<String,dynamic>> categories = [];
+
+    final QuerySnapshot<Map<String, dynamic>> snapshot = await _userCollection.doc(uid).collection('categories').get();
+
+    for (var doc in snapshot.docs) {
+      categories.add(doc.data());
+    }
+
+    return categories;
+  }
+
+  Future? updateCategory(String category, double limit) async {
+    try {
+      Map<String, dynamic> categoryData = {
+        'category': category,
+        'limit': limit,
+      };
+
+      _userCollection.doc(uid).collection('categories').doc(category).update({
+        'limit': limit,
+      });
+
+      return Future.value(true);
+    } catch (e) {
+      // print("An error occurred ,this is the error $e");
+      return null;
+    }
+  }
+
   Future? addTransaction(Transactions transaction)  {
     try {
       Map<String, dynamic> transactionData = transaction.toMap();
@@ -19,27 +67,29 @@ class DatabaseService with ChangeNotifier{
       );
 
       _userCollection.doc(uid).update({
-        'totalExpenses': FieldValue.increment(transaction.amount as num),
+        'totalExpenses': FieldValue.increment(transaction.amount),
         'noOfTransactions': FieldValue.increment(1),
       });
 
 
       return Future.value(true);
     } catch (e) {
-      print("An error occured ,this is the error $e");
+      // print("An error occurred ,this is the error $e");
       return null;
     }
   }
 
-  List<Map<String, dynamic>> _transactionsListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return doc.data() as Map<String, dynamic>;
-    }).toList();
-  }
+  Future<List<Map<String, dynamic>>?> getTransactions() async{
+    List<Map<String,dynamic>> transactions = [];
 
-  List<Map<String, dynamic>>? getTransactions() {
-    _userCollection.doc(uid).collection('transactions').get().then((value) {
-      return _transactionsListFromSnapshot(value);
-    });
+    final QuerySnapshot<Map<String, dynamic>> snapshot = await _userCollection.doc(uid).collection('transactions').get();
+
+    for (var doc in snapshot.docs) {
+      transactions.add(doc.data());
+
+      // print("This is the doc ${transactions[transactions.length - 1]}");
+    }
+
+    return transactions;
   }
 }
