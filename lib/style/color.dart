@@ -9,3 +9,5 @@ const Color softGray = Color(0xffE2E2E2);
 const Color white = Color(0xffffffff);
 const Color purple = Color(0xFF5A01A4);
 const Color lightBlack = Color(0xFF333333);
+const Color darkPurple = Color(0xFF402579);
+const Color lightPurple = Color(0xFFF6ECFF);
