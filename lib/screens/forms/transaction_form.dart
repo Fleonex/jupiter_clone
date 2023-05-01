@@ -16,9 +16,9 @@ class TransactionForm extends StatefulWidget {
 }
 
 class _TransactionFormState extends State<TransactionForm> {
+  final String uid = FirebaseAuth.instance.currentUser!.uid;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final DatabaseService _db = DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
-
   final TextEditingController amountController = TextEditingController();
   final TextEditingController newCategoryController = TextEditingController();
   final TextEditingController descriptionController =
@@ -27,9 +27,32 @@ class _TransactionFormState extends State<TransactionForm> {
   final TextEditingController dateController = TextEditingController();
   String? _selectedCategory = 'Food'; // default category
 
-  final List<String> _categories = ['Food', 'Transportation', 'Rent', 'Utilities', 'None'];
+  List<String> _categories = [];
   bool isNewCategoryEnabled = true;
   String newCategory='';
+
+  @override
+  void initState(){
+    super.initState();
+     _fetchData();
+  }
+
+  Future _fetchData() async{
+    List<Map<String, dynamic>>? catList = await _db.getCategories();
+    List<String> categoriesList = [];
+    if (catList == null) {
+      return;
+    }
+
+    for (int i = 0; i < catList.length; i++) {
+      categoriesList.add(catList[i]['category']);
+    }
+
+    setState(() {
+      _categories = categoriesList;
+    });
+  }
+
   void _submitData() {
     final String enteredAmount = amountController.text;
     final String enteredDescription = descriptionController.text;
@@ -45,10 +68,14 @@ class _TransactionFormState extends State<TransactionForm> {
     if (enteredAmount.isEmpty || enteredDescription.isEmpty || _selectedCategory == null) {
       return;
     }
+
+    if (_selectedCategory == "None") {
+      selectedCategory = "Others";
+    }
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");
     final DateTime enteredDate = dateFormat.parse(dateController.text);
 
-    Transactions newTransaction = Transactions(enteredDate, double.parse(enteredAmount), enteredDescription, selectedCategory!);
+    Transactions newTransaction = Transactions(enteredDate, double.parse(enteredAmount), enteredDescription, selectedCategory);
 
     final Future? res = _db.addTransaction(newTransaction);
 
@@ -198,6 +225,7 @@ class _TransactionFormState extends State<TransactionForm> {
               },
             ),
             const SizedBox(height: 10.0 ),
+            (_categories.isEmpty) ? Container() :
             DropdownButtonFormField<String>(
               value: _selectedCategory,
               decoration: const InputDecoration(
@@ -215,9 +243,9 @@ class _TransactionFormState extends State<TransactionForm> {
                 DropdownMenuItem(
                   value: newCategory,
                   child: Row(
-                    children: [
+                    children: const [
                       Icon(Icons.add, color: lightPurple),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Text('New category', style: TextStyle(color: darkGray)),
                     ],
                   ),
