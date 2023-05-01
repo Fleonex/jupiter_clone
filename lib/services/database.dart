@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:jupiter_clone/models/transactions.dart';
 
-class DatabaseService extends ChangeNotifier{
+class DatabaseService with ChangeNotifier{
   final String uid;
   DatabaseService({required this.uid});
 
   // collection reference
   final CollectionReference _userCollection = FirebaseFirestore.instance.collection('users');
 
-  Future addTransaction(Transactions transaction)  {
+  Future? addTransaction(Transactions transaction)  {
     try {
       Map<String, dynamic> transactionData = transaction.toMap();
       transactionData['creationDate'] = Timestamp.now();
@@ -27,7 +27,7 @@ class DatabaseService extends ChangeNotifier{
       return Future.value(true);
     } catch (e) {
       print("An error occured ,this is the error $e");
-      return Future.value(false);
+      return null;
     }
   }
 
@@ -37,9 +37,9 @@ class DatabaseService extends ChangeNotifier{
     }).toList();
   }
 
-  Stream<List<Map<String, dynamic>>> get transactions {
-    final res =  _userCollection.doc(uid).collection('transactions').snapshots().map(_transactionsListFromSnapshot);
-    notifyListeners();
-    return res;
+  List<Map<String, dynamic>>? getTransactions() {
+    _userCollection.doc(uid).collection('transactions').get().then((value) {
+      return _transactionsListFromSnapshot(value);
+    });
   }
 }

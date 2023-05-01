@@ -18,7 +18,7 @@ class Transaction extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: white,
           borderRadius: BorderRadius.all(
             Radius.circular(30),

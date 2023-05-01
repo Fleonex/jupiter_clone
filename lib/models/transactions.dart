@@ -4,8 +4,8 @@ import 'package:uuid/uuid.dart';
 final db = FirebaseFirestore.instance;
 
 class Transactions {
-  final String date;
-  final String amount;
+  final DateTime date;
+  final num amount;
   final String description;
 
   Transactions(this.date, this.amount, this.description);

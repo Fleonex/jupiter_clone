@@ -1,33 +1,65 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jupiter_clone/services/database.dart';
 import 'package:jupiter_clone/style/color.dart';
 
-class TransactionForm extends StatelessWidget {
+import '../../models/transactions.dart';
+import '../../style/constants.dart';
+
+class TransactionForm extends StatefulWidget {
   const TransactionForm({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final TextEditingController _amountController = TextEditingController();
-    final TextEditingController _descriptionController =
-        TextEditingController();
-    final TextEditingController _dateController = TextEditingController();
+  State<TransactionForm> createState() => _TransactionFormState();
+}
 
-    _dateController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
+class _TransactionFormState extends State<TransactionForm> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final DatabaseService _db = DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
 
-    void _submitData() {
-      final String enteredAmount = _amountController.text;
-      final String enteredDescription = _descriptionController.text;
+  final TextEditingController amountController = TextEditingController();
 
-      if (enteredAmount.isEmpty || enteredDescription.isEmpty) {
-        return;
-      }
-      DateFormat dateFormat = DateFormat("yyyy-MM-dd");
-      final DateTime enteredDate = dateFormat.parse(_dateController.text);
+  final TextEditingController descriptionController =
+  TextEditingController();
 
-      Navigator.of(context).pop();
+  final TextEditingController dateController = TextEditingController();
+
+  void _submitData() {
+    final String enteredAmount = amountController.text;
+    final String enteredDescription = descriptionController.text;
+
+    if (enteredAmount.isEmpty || enteredDescription.isEmpty) {
+      return;
     }
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+    final DateTime enteredDate = dateFormat.parse(dateController.text);
 
+    Transactions newTransaction = Transactions(enteredDate, double.parse(enteredAmount), enteredDescription);
+
+    final Future? res = _db.addTransaction(newTransaction);
+
+    if (res != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Transaction added successfully'),
+        ),
+      );
+      Navigator.of(context).pop();
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Error adding transaction'),
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Transaction'),
@@ -42,28 +74,42 @@ class TransactionForm extends StatelessWidget {
         ],
       ),
       body: Form(
-        key: _formKey,
+        key: formKey,
         child: ListView(
           children: [
+            const SizedBox(height: 10.0),
             TextFormField(
-              controller: _amountController,
+              controller: amountController,
               decoration: const InputDecoration(
                 labelText: 'Amount',
+                prefixIcon: Padding(
+                  padding: EdgeInsets.all(defaultPadding),
+                  child: Icon(Icons.attach_money),
+                ),
               ),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter amount';
                 }
+
+                if (double.tryParse(value) == null) {
+                  return 'Please enter a valid number';
+                }
                 return null;
               },
               onSaved: (String? value) {
-                _amountController.text = value!;
+                amountController.text = value!;
               },
             ),
+            const SizedBox(height: 10.0),
             TextFormField(
-              controller: _descriptionController,
+              controller: descriptionController,
               decoration: const InputDecoration(
                 labelText: 'Description',
+                prefixIcon: Padding(
+                  padding: EdgeInsets.all(defaultPadding),
+                  child: Icon(Icons.description),
+                ),
               ),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -72,12 +118,18 @@ class TransactionForm extends StatelessWidget {
                 return null;
               },
               onSaved: (String? value) {
-                _descriptionController.text = value!;
+                descriptionController.text = value!;
               },
             ),
+            const SizedBox(height: 10.0),
             TextFormField(
+              controller: dateController,
               decoration: const InputDecoration(
                 labelText: 'Date',
+                prefixIcon: Padding(
+                  padding: EdgeInsets.all(defaultPadding),
+                  child: Icon(Icons.calendar_today),
+                ),
               ),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -86,29 +138,33 @@ class TransactionForm extends StatelessWidget {
                 return null;
               },
               keyboardType: TextInputType.datetime,
-              onTap: () async {
-                DateTime? date = DateTime(1900);
-
-                date = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2010),
-                    lastDate: DateTime(DateTime.now().year + 1));
-
-                    _dateController.text = DateFormat('yyyy-MM-dd').format(date!);
-              }
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _submitData();
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please fill in all fields')),
-                  );
-                }
+              onTap: () {
+                showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                ).then((DateTime? value) {
+                  if (value != null) {
+                    dateController.text = DateFormat("yyyy-MM-dd").format(value);
+                  }
+                });
               },
-              child: const Text('Submit'),
+            ),
+            const SizedBox(height: 10.0),
+            Hero(
+              tag: "login_btn",
+              child: ElevatedButton(
+                onPressed: () async {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+                    _submitData();
+                  }
+                },
+                child: Text(
+                  "Submit".toUpperCase(),
+                ),
+              ),
             ),
           ],
         ),

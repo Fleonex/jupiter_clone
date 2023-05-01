@@ -18,12 +18,12 @@ class Dashboard extends StatefulWidget {
   }) : super(key: key);
 }
 
-List<Widget> AllWidgets = [
-  Text('Widget 1'),
-  Text('Widget 2'),
-  Text('Widget 3'),
-  // ...
-];
+// List<Widget> AllWidgets = [
+//   Text('Widget 1'),
+//   Text('Widget 2'),
+//   Text('Widget 3'),
+//   // ...
+// ];
 
 class _DashboardState extends State<Dashboard> {
 
@@ -42,7 +42,6 @@ class _DashboardState extends State<Dashboard> {
     double total = 0;
     snapshot.docs.forEach((doc) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      // print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" + data['amount'].toString() + "\n");
         total += double.parse(data['amount']);
     });
     // print("\n\n\n\nThis is the total " + total.toString() + "\n");
@@ -55,97 +54,96 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: softBlue,
-      body: Container(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 240,
-              decoration: const BoxDecoration(
-                color: purple,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(24),
-                  bottomRight: Radius.circular(24),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 60,
-                  left: 24,
-                  right: 24,
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Image.asset('assets/images/user_photo.png', height: 50),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Howdy',
-                              style: subTitle,
-                            ),
-                            Text(
-                              'Kang Smile',
-                              style: headerWhite,
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Image.asset('assets/icons/ic_bell.png',
-                                  height: 20),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Total Expenses',
-                              style: subTitle,
-                            ),
-                            Text(
-                              'Rs. $_totalExpenses',
-                              style: largePrimary,
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+      body: ListView(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 240,
+            decoration: const BoxDecoration(
+              color: purple,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(24),
+                bottomRight: Radius.circular(24),
               ),
             ),
-            const SizedBox(
-              height: 20,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 60,
+                left: 24,
+                right: 24,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Image.asset('assets/images/user_photo.png', height: 50),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Howdy',
+                            style: subTitle,
+                          ),
+                          Text(
+                            'Kang Smile',
+                            style: headerWhite,
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: Image.asset('assets/icons/ic_bell.png',
+                                height: 20),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Total Expenses',
+                            style: subTitle,
+                          ),
+                          Text(
+                            'Rs. $_totalExpenses',
+                            style: largePrimary,
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
 
-            TransactionList(),
-          ],
-        ),
+          TransactionList(),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => transactionFile.Transaction(amount: "amount",date: "date", description: "category")),
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const TransactionForm(),
+            ),
           );
         },
         backgroundColor: Colors.green,

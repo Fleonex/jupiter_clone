@@ -61,8 +61,8 @@ class _uploadFileState extends State<uploadFile> {
 
     filePath = result.files.first.path!;
     if (filePath != null) {
-      var bytes = await File(filePath.toString()).readAsBytesSync();
-      var excel = await Excel.decodeBytes(bytes);
+      var bytes = File(filePath.toString()).readAsBytesSync();
+      var excel = Excel.decodeBytes(bytes);
       List<List<String>> rows = [];
       for (var table in excel.tables.keys) {
         print(table); //sheet Name

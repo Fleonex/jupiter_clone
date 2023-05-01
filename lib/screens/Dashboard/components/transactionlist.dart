@@ -1,9 +1,13 @@
 import 'dart:ffi';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart'
 as transactionFile;
+import 'package:provider/provider.dart';
+
+import '../../../services/database.dart';
 
 class TransactionList extends StatefulWidget {
   @override
@@ -12,6 +16,8 @@ class TransactionList extends StatefulWidget {
 
 class _TransactionListState extends State<TransactionList> {
   List<Widget> _widgetList = [];
+  final String uid = FirebaseAuth.instance.currentUser!.uid;
+
   @override
   void initState() {
     super.initState();
@@ -19,33 +25,53 @@ class _TransactionListState extends State<TransactionList> {
   }
 
   void _fetchData() async {
-    QuerySnapshot snapshot =
-    await FirebaseFirestore.instance.collection('Transactions').get();
-
-    print("This is the snapshot " + snapshot.toString());
+    final snapshot = DatabaseService(uid: uid).getTransactions();
+    // print("This is the snapshot $snapshot");
     List<Widget> list = [];
-    snapshot.docs.forEach((doc) {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      list.add(transactionFile.Transaction(
-        date: data['date'].toString().substring(0,10),
-        amount: data['amount'],
-        description: data['description'],
-      ));
-    });
+
+    if (snapshot == null) {
+      return;
+    }
+
+    for (var doc in snapshot) {
+      Map<String, dynamic> data = doc;
+      list.add(
+        transactionFile.Transaction(
+          amount: data['amount'],
+          date: data['date'],
+          description: data['description'],
+        )
+      );
+
+      print("This is the doc $doc");
+    }
+
     setState(() {
-      _widgetList = list;
+      _widgetList = list.reversed.toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.572,
       child: SingleChildScrollView(
         child: Column(
-          children: _widgetList,
+          children: [
+            ..._widgetList,
+          ],
         ),
-      ),
+      )
     );
   }
+  // Widget build(BuildContext context) {
+  //   return ChangeNotifierProvider(
+  //     create: (context) => DatabaseService(uid: uid),
+  //     child: ListView.builder(
+  //       itemCount: _widgetList.length,
+  //       itemBuilder: (context, index) {
+  //         return _widgetList[index];
+  //       },
+  //     ),
+  //   );
+  // }
 }
