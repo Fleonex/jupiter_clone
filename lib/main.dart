@@ -6,18 +6,37 @@ import 'package:jupiter_clone/screens/Login/login_screen.dart';
 import 'package:jupiter_clone/style/constants.dart';
 import 'package:jupiter_clone/screens/Splash/splash.dart';
 import 'package:flutter/services.dart';
-
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  AwesomeNotifications().initialize(
+    null,
+    [
+      NotificationChannel(
+        channelKey: "Basic Channel Key",
+        channelDescription: "Basic Channel Description",
+        channelName:"Channel Name",
+      ),
+    ],
+    debug: true,
+  );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
+  void initState(){
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) =>
+    {
+      if(!isAllowed){
+        AwesomeNotifications().requestPermissionToSendNotifications()
+      }
+    });
+  }
+  // AwesomeNotifications();
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
+  awesome_notifications:
+    dependency: "direct main"
+    description:
+      name: awesome_notifications
+      sha256: "2b430c75cc879d6cfd52bb6eb2b5c1591ed425347816408cdcbd3f6916bba14c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.4+1"
   boolean_selector:
     dependency: transitive
     description:
@@ -262,22 +270,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  flutter_local_notifications:
-    dependency: "direct main"
-    description:
-      name: flutter_local_notifications
-      sha256: d35082642e22e9d4cb3f689f175b6dc762e25f1209c36b855677222c18c2068b
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.1.1"
-  flutter_local_notifications_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_local_notifications_platform_interface
-      sha256: "7744aad0b3637e6004929efe9ac2dfd3b878f4cecebfb1e9c2dfea5ac7d5c2e7"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -290,10 +282,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_spinkit
-      sha256: "77a2117c0517ff909221f3160b8eb20052ab5216107581168af574ac1f05dff8"
+      sha256: b39c753e909d4796906c5696a14daf33639a76e017136c8d82bf3e620ce5bb8e
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.0"
+    version: "5.2.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -369,7 +361,7 @@ packages:
     source: hosted
     version: "0.10.2+1"
   http:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: http
       sha256: "6aa2946395183537c8b880962d935877325d6a09a2867c3970c05c0fed6ac482"
@@ -645,14 +637,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.16"
-  timezone:
-    dependency: transitive
-    description:
-      name: timezone
-      sha256: f60f389b14643ee90a3ab96ae414f77b0472e3817b5b4bf5cc9ce81ec0113f78
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.0"
   typed_data:
     dependency: transitive
     description:

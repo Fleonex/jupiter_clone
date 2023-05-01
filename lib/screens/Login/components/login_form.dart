@@ -20,86 +20,97 @@ class _LoginFormState extends State<LoginForm> {
   String _email = "";
   String _password = "";
   final _formKey = GlobalKey<FormState>();
-
+  bool _showPassword = false;
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          TextFormField(
-            controller: _emailController,
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            cursorColor: kPrimaryColor,
-            onSaved: (email) {
-              _email = email.toString();
-            },
-            decoration: const InputDecoration(
-              hintText: "Your email",
-              prefixIcon: Padding(
-                padding: EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
-              controller: _passwordController,
-              textInputAction: TextInputAction.done,
-              obscureText: true,
+    return SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
-              onSaved: (password) {
-                _password = password.toString();
+              onSaved: (email) {
+                _email = email.toString();
               },
               decoration: const InputDecoration(
-                hintText: "Your password",
+                hintText: "Your email",
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
+                  child: Icon(Icons.person),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: defaultPadding),
-          Hero(
-            tag: "login_btn",
-            child: ElevatedButton(
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  dynamic result = await AuthService().signInWithEmailAndPassword(_email, _password);
-                  if (result == null) {
-                    if (mounted) return;
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+              child: TextFormField(
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Invalid Credentials"),
-                      ),
-                    );
-                  }
-                }
-              },
-              child: Text(
-                "Login".toUpperCase(),
+                controller: _passwordController,
+                textInputAction: TextInputAction.done,
+                obscureText: !_showPassword,
+                cursorColor: kPrimaryColor,
+                onSaved: (password) {
+                  _password = password.toString();
+                },
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _showPassword = !_showPassword;
+                      });
+                    },
+                    icon: _showPassword==true ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+                  ),
+                  hintText: "Your password",
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.all(defaultPadding),
+                    child: Icon(Icons.lock),
+                  ),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: defaultPadding),
-          AlreadyHaveAnAccountCheck(
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const SignUpScreen();
-                  },
+            const SizedBox(height: defaultPadding),
+            Hero(
+              tag: "login_btn",
+              child: ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    dynamic result = await AuthService().signInWithEmailAndPassword(_email, _password);
+                    if (result == null) {
+                      if (mounted) return;
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Invalid Credentials"),
+                        ),
+                      );
+                    }
+                  }
+                },
+                child: Text(
+                  "Login".toUpperCase(),
                 ),
-              );
-            },
-          ),
-        ],
+              ),
+            ),
+            const SizedBox(height: defaultPadding),
+            AlreadyHaveAnAccountCheck(
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const SignUpScreen();
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
