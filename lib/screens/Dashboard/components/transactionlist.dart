@@ -25,30 +25,30 @@ class _TransactionListState extends State<TransactionList> {
   }
 
   void _fetchData() async {
-    final snapshot = DatabaseService(uid: uid).getTransactions();
-    // print("This is the snapshot $snapshot");
-    List<Widget> list = [];
-
-    if (snapshot == null) {
-      return;
-    }
-
-    for (var doc in snapshot) {
-      Map<String, dynamic> data = doc;
-      list.add(
-        transactionFile.Transaction(
-          amount: data['amount'],
-          date: data['date'],
-          description: data['description'],
-        )
-      );
-
-      print("This is the doc $doc");
-    }
-
-    setState(() {
-      _widgetList = list.reversed.toList();
-    });
+    // final snapshot = DatabaseService(uid: uid).getTransactions();
+    // // print("This is the snapshot $snapshot");
+    // List<Widget> list = [];
+    //
+    // if (snapshot == null) {
+    //   return;
+    // }
+    //
+    // for (var doc in snapshot) {
+    //   Map<String, dynamic> data = doc;
+    //   list.add(
+    //     transactionFile.Transaction(
+    //       amount: data['amount'],
+    //       date: data['date'],
+    //       description: data['description'],
+    //     )
+    //   );
+    //
+    //   print("This is the doc $doc");
+    // }
+    //
+    // setState(() {
+    //   _widgetList = list.reversed.toList();
+    // });
   }
 
   @override

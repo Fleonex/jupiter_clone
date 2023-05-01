@@ -19,7 +19,7 @@ class DatabaseService with ChangeNotifier{
       );
 
       _userCollection.doc(uid).update({
-        'totalExpenses': FieldValue.increment(transaction.amount as num),
+        'totalExpenses': FieldValue.increment(transaction.amount),
         'noOfTransactions': FieldValue.increment(1),
       });
 
@@ -31,15 +31,17 @@ class DatabaseService with ChangeNotifier{
     }
   }
 
-  List<Map<String, dynamic>> _transactionsListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return doc.data() as Map<String, dynamic>;
-    }).toList();
-  }
+  Future<List<Map<String, dynamic>>?> getTransactions() async{
+    List<Map<String,dynamic>> transactions = [];
 
-  List<Map<String, dynamic>>? getTransactions() {
-    _userCollection.doc(uid).collection('transactions').get().then((value) {
-      return _transactionsListFromSnapshot(value);
-    });
+    final QuerySnapshot<Map<String, dynamic>> snapshot = await _userCollection.doc(uid).collection('transactions').get();
+
+    for (var doc in snapshot.docs) {
+      transactions.add(doc.data());
+
+      // print("This is the doc ${transactions[transactions.length - 1]}");
+    }
+
+    return transactions;
   }
 }

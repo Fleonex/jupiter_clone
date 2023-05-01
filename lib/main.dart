@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: Splash(),
+      home: const Splash(),
     );
   }
 }
