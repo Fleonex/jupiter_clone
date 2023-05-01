@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:jupiter_clone/services/database.dart';
 
 import '../../style/color.dart';
@@ -14,6 +15,7 @@ class BudgetingPage extends StatefulWidget {
 class _BudgetingPageState extends State<BudgetingPage> {
   final String uid = FirebaseAuth.instance.currentUser!.uid;
   List<Widget> _categoryLimit = [];
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -22,6 +24,11 @@ class _BudgetingPageState extends State<BudgetingPage> {
   }
 
   void _fetchData() async {
+
+    setState(() {
+      _isLoading = true;
+    });
+
     final res = await DatabaseService(uid: uid).getCategories();
 
     List<_Categories> categories = [];
@@ -51,11 +58,15 @@ class _BudgetingPageState extends State<BudgetingPage> {
         });
       }));
     }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isLoading ? SpinKitSpinningLines(color: purple) : Scaffold(
       appBar: AppBar(
         title: const Text('Budgeting'),
         backgroundColor: purple,
@@ -65,7 +76,11 @@ class _BudgetingPageState extends State<BudgetingPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Set your monthly budget for each category:'),
+            const Text('Set your monthly budget for each category:',
+              style: TextStyle(fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 16.0),
             ..._categoryLimit,
           ],
