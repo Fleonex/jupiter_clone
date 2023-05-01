@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jupiter_clone/screens/forms/transaction_form.dart';
+import 'package:jupiter_clone/screens/Budget/Budget.dart';
 import 'package:jupiter_clone/services/database.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
