@@ -201,7 +201,6 @@ class _TransactionFormState extends State<TransactionForm> {
             DropdownButtonFormField<String>(
               value: _selectedCategory,
               decoration: const InputDecoration(
-                labelText: 'Category',
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.category),

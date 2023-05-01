@@ -4,7 +4,7 @@ import 'package:jupiter_clone/style/color.dart';
 
 import '../Graphs/graphs.dart';
 import '../Profile/profile.dart';
-import '../Budget/Budget.dart';
+import '../Budget/budget.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 

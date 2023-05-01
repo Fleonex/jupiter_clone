@@ -71,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
                   _formKey.currentState!.save();
                   dynamic result = await AuthService().signInWithEmailAndPassword(_email, _password);
                   if (result == null) {
-                    if (!mounted) return;
+                    if (mounted) return;
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(

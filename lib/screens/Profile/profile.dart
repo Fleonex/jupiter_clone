@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:jupiter_clone/services/auth.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
-
+import '../Settings/Settings.dart';
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -116,6 +116,67 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Text(
                               'Upload Excel Sheet',
+                              style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: black,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            width: double.infinity,
+            height: 70,
+            decoration: const BoxDecoration(
+              color: white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(50),
+                topRight: Radius.circular(50),
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 20,
+                left: 24,
+                right: 24,
+              ),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SettingsPage()),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.settings, color: red, size: 30),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Settings',
                               style: GoogleFonts.poppins(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
