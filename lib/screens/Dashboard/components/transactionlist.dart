@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart'
-as transactionFile;
+    as transactionFile;
 import 'package:provider/provider.dart';
 
 import '../../../services/database.dart';
@@ -35,13 +35,11 @@ class _TransactionListState extends State<TransactionList> {
 
     for (var doc in snapshot) {
       Map<String, dynamic> data = doc;
-      list.add(
-        transactionFile.Transaction(
-          amount: data['amount'],
-          date: data['date'],
-          description: data['description'],
-        )
-      );
+      list.add(transactionFile.Transaction(
+        amount: data['amount'],
+        date: data['date'],
+        description: data['description'],
+      ));
 
       print("This is the doc $doc");
     }
@@ -54,14 +52,13 @@ class _TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            ..._widgetList,
-          ],
-        ),
-      )
-    );
+        child: SingleChildScrollView(
+      child: Column(
+        children: [
+          ..._widgetList,
+        ],
+      ),
+    ));
   }
   // Widget build(BuildContext context) {
   //   return ChangeNotifierProvider(
