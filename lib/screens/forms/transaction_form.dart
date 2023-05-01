@@ -60,7 +60,7 @@ class _TransactionFormState extends State<TransactionForm> {
       );
       Navigator.of(context).pop();
     } else {
-      if (mounted) {
+      if (!mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Error adding transaction'),
