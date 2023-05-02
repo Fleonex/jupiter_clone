@@ -57,19 +57,33 @@ class AuthService {
     }
   }
 
+  Future signOut() async {
+    try {
+      _auth.signOut();
+      return "success";
+    } catch (e) {
+      return "error";
+    }
+  }
+
+
+
+
+
+
   // Sign in with Google
   Future<User?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleSignInAccount =
-          await GoogleSignIn().signIn();
+      await GoogleSignIn().signIn();
       final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount!.authentication;
+      await googleSignInAccount!.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
       final UserCredential authResult =
-          await _auth.signInWithCredential(credential);
+      await _auth.signInWithCredential(credential);
       final User? user = authResult.user;
 
       // Check if user already exists
@@ -92,15 +106,6 @@ class AuthService {
       return user;
     } catch (e) {
       return null;
-    }
-  }
-
-  Future signOut() async {
-    try {
-      _auth.signOut();
-      return "success";
-    } catch (e) {
-      return "error";
     }
   }
 }

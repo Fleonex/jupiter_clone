@@ -287,16 +287,22 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 child: Column(
                   children: [
+
                     Row(
+
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        const Icon(Icons.account_tree, color: red, size: 30),
+                        const SizedBox(
+                          width: 12,
+                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               (isClassificationAllowed
-                                  ? "Don't Allow Classification"
-                                  : "Allow Classification"),
+                                  ? "Don't Classify"
+                                  : "Classify"),
                               style: GoogleFonts.poppins(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,

@@ -67,7 +67,7 @@ class _BudgetingPageState extends State<BudgetingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading ? SpinKitSpinningLines(color: purple) : Scaffold(
+    return _isLoading ? const SpinKitSpinningLines(color: purple) : Scaffold(
       appBar: AppBar(
         title: const Text('Budgeting'),
         backgroundColor: purple,

@@ -35,9 +35,13 @@ class Transaction extends StatelessWidget {
                 Container(
                     child: Column(children: [
                   Row(children: [
-                    Image.asset(
-                      'assets/icons/ic_apple.png',
-                      height: 50,
+                    Container(
+                      margin: const EdgeInsets.only(right: 12),
+                      child: const Icon(
+                        Icons.monetization_on,
+                        color: Colors.green,
+                        size: 50,
+                      ),
                     ),
                     SizedBox(
                       height: 12,

@@ -6,6 +6,7 @@ class DefaultCategories {
     "Bills",
     "Entertainment",
     "Others",
+    "Electronics",
   ];
   static const Map<String, double> limits =
     {
@@ -15,5 +16,6 @@ class DefaultCategories {
       "Bills": 10000,
       "Entertainment": 10000,
       "Others": 10000,
+      "Electronics": 10000,
     };
 }
