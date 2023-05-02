@@ -63,7 +63,7 @@ class _NotificationState extends State<Notification> {
     }
 
     for (int i = 0; i < budgetSnapShot!.length; i++) {
-      if(allExpenses[budgetSnapShot[i]['category']] == null){
+      if (allExpenses[budgetSnapShot[i]['category']] == null) {
         allExpenses[budgetSnapShot[i]['category']] = 0.0;
       }
       if (allExpenses[budgetSnapShot[i]['category']]! >
@@ -73,7 +73,7 @@ class _NotificationState extends State<Notification> {
                 budgetSnapShot[i]['limit'];
         list.add(budget_file.Budget(
             category: budgetSnapShot[i]['category'].toString(),
-            exceededBy: difference.toString()));
+            exceededBy: difference));
       }
     }
     setState(() {

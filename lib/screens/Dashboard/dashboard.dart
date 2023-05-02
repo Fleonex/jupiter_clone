@@ -7,8 +7,11 @@ import 'package:jupiter_clone/services/database.dart';
 import 'package:jupiter_clone/style/color.dart';
 import 'package:jupiter_clone/style/typo.dart';
 import 'package:jupiter_clone/screens/Dashboard/components/transaction.dart'
-as transaction_file;
-import 'package:jupiter_clone/screens/Notification/notification.dart' as notificationfile;
+    as transaction_file;
+import 'package:jupiter_clone/screens/Notification/notification.dart'
+    as notificationfile;
+import 'package:provider/provider.dart';
+import 'package:jupiter_clone/screens/Settings/currencymodel.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -33,7 +36,6 @@ class _DashboardState extends State<Dashboard> {
   bool _isLoading = false;
   String email = FirebaseAuth.instance.currentUser!.email.toString();
 
-
   @override
   void initState() {
     super.initState();
@@ -41,7 +43,6 @@ class _DashboardState extends State<Dashboard> {
   }
 
   void _fetchData() async {
-
     setState(() {
       _isLoading = true;
     });
@@ -74,13 +75,11 @@ class _DashboardState extends State<Dashboard> {
 
       DateTime date = data['date'].toDate();
 
-      list.add(
-        transaction_file.Transaction(
-          amount: data['amount'].toString(),
-          description: DateFormat('dd MMM yyyy').format(date).toString(),
-          date: data['category'],
-        )
-      );
+      list.add(transaction_file.Transaction(
+        amount: data['amount'],
+        description: DateFormat('dd MMM yyyy').format(date).toString(),
+        date: data['category'],
+      ));
     }
 
     // print("\n\n\n\nThis is the total " + total.toString() + "\n");
@@ -94,117 +93,118 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading ? SpinKitSpinningLines(color: purple) : Scaffold(
-      backgroundColor: softBlue,
-      body: ListView(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 240,
-            decoration: const BoxDecoration(
-              color: purple,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(24),
-                bottomRight: Radius.circular(24),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 60,
-                left: 24,
-                right: 24,
-              ),
-              child: Column(
+    return _isLoading
+        ? SpinKitSpinningLines(color: purple)
+        : Consumer<currencyModel>(
+            builder: (context, currency, child) => Scaffold(
+              backgroundColor: softBlue,
+              body: ListView(
                 children: [
-                  Row(
-                    children: [
-                      Image.asset('assets/images/user_photo.png', height: 50),
-                      const SizedBox(
-                        width: 10,
+                  Container(
+                    width: double.infinity,
+                    height: 240,
+                    decoration: const BoxDecoration(
+                      color: purple,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(24),
+                        bottomRight: Radius.circular(24),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 60,
+                        left: 24,
+                        right: 24,
+                      ),
+                      child: Column(
                         children: [
-                          Text(
-                            'Howdy',
-                            style: subTitle,
+                          Row(
+                            children: [
+                              Image.asset('assets/images/user_photo.png',
+                                  height: 50),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Howdy',
+                                    style: subTitle,
+                                  ),
+                                  Text(
+                                    email,
+                                    style: headerWhite,
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              (notificationfile.Notification()),
+                                        ),
+                                      );
+                                    },
+                                    icon: Image.asset(
+                                        'assets/icons/ic_bell.png',
+                                        height: 20),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          Text(
-                            email,
-                            style: headerWhite,
+                          const SizedBox(
+                            height: 30,
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Total Expenses',
+                                    style: subTitle,
+                                  ),
+                                  Text(
+                                    currency.getCurrencyString(_totalExpenses),
+                                    style: largePrimary,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
                         ],
                       ),
-                      const Spacer(),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => (notificationfile.Notification()),
-                                ),
-                              );
-                            },
-                            icon: Image.asset('assets/icons/ic_bell.png',
-                                height: 20),
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Total Expenses',
-                            style: subTitle,
-                          ),
-                          Text(
-                            'Rs. $_totalExpenses',
-                            style: largePrimary,
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
+                  SingleChildScrollView(
+                    child: Column(children: [..._widgetList]),
+                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                ..._widgetList
-              ]
-            ),
-          ),
-          const SizedBox(
-            height: 20
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 10,
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const TransactionForm(),
+              floatingActionButton: FloatingActionButton(
+                elevation: 10,
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const TransactionForm(),
+                    ),
+                  );
+                },
+                backgroundColor: Colors.green,
+                child: const Icon(Icons.add),
+              ),
             ),
           );
-        },
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.add),
-      ),
-    );
   }
 }
