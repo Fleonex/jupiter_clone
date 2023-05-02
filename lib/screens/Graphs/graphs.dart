@@ -134,7 +134,7 @@ class _GraphsState extends State<Graphs> {
 
       monthlyExpenses[year]![int.parse(month) - 1].expenses += data['amount'];
       String category = data['category'];
-      print("$category ${categoricalExpenses[year]![int.parse(month) - 1]!.firstWhere((element) => element.category == category).category}");
+      // print("$category ${categoricalExpenses[year]![int.parse(month) - 1]!.firstWhere((element) => element.category == category).category}");
       categoricalExpenses[year]![int.parse(month) - 1]!.firstWhere((element) => element.category == category).expenses += data['amount'];
     }
 

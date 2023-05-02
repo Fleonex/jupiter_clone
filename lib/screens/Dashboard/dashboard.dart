@@ -33,6 +33,7 @@ class _DashboardState extends State<Dashboard> {
   bool _isLoading = false;
   String email = FirebaseAuth.instance.currentUser!.email.toString();
 
+
   @override
   void initState() {
     super.initState();
@@ -45,7 +46,8 @@ class _DashboardState extends State<Dashboard> {
       _isLoading = true;
     });
 
-    List<Map<String, dynamic>>? snapshot = await DatabaseService(uid: uid).getTransactions();
+    List<Map<String, dynamic>>? snapshot =
+        await DatabaseService(uid: uid).getTransactions();
     // print("This is the snapshot $snapshot");
     // List<Widget> list = [];
     double total = 0;
