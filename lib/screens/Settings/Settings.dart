@@ -58,7 +58,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     Provider.of<currencyModel>(context, listen: false)
                         .changeCurrency(value!);
                     setState(() {
-                      _selectedCurrency = value!;
+                      _selectedCurrency = value;
                     });
                   },
                 ),

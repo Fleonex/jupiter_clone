@@ -27,7 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
       DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
   bool permissionGranted = false;
   String email = FirebaseAuth.instance.currentUser!.email.toString();
-
+  bool isClassificationAllowed = false;
   Future _getStoragePermission() async {
     if (await Permission.storage.request().isGranted) {
       setState(() {
@@ -63,7 +63,13 @@ class _ProfilePageState extends State<ProfilePage> {
         for (var row in excel.tables[table]!.rows) {
           List<String> rowList = [];
           for (var cell in row) {
-            rowList.add(cell!.value.toString());
+            if(cell == null){
+              rowList.add("");
+            }
+            else{
+              rowList.add(cell!.value.toString());
+            }
+
           }
           if (!first) {
             String gotCategory = "";
@@ -71,10 +77,18 @@ class _ProfilePageState extends State<ProfilePage> {
             for (int i = 0; i < res.length; i++) {
               cats.add(res[i]["category"]);
             }
-            if (rowList[3] == "") {
-              // gotCategory = res[0]["category"];
-
-              gotCategory = await getCategory(cats, rowList[2]);
+            if (rowList[3] == null || rowList[3] == "") {
+              if (isClassificationAllowed) {
+                gotCategory = await getCategory(cats, rowList[2]);
+                print("The category of this " +
+                    rowList[2].toString() +
+                    " " +
+                    gotCategory +
+                    "\n");
+              } else {
+                gotCategory = res[0]["category"];
+                print("I got this category!");
+              }
               print("The category of this " +
                   rowList[2].toString() +
                   " " +
@@ -104,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 enteredDate,
                 double.parse(enteredAmount),
                 enteredDescription,
-                selectedCategory!);
+                selectedCategory);
 
             await _db.addTransaction(newTransaction);
 
@@ -225,6 +239,64 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Text(
                               'Upload Excel Sheet',
+                              style: GoogleFonts.poppins(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: black,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isClassificationAllowed = !isClassificationAllowed;
+              });
+            },
+            child: Container(
+              width: double.infinity,
+              height: 70,
+              decoration: const BoxDecoration(
+                color: white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 20,
+                  left: 24,
+                  right: 24,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              (isClassificationAllowed
+                                  ? "Don't Allow Classification"
+                                  : "Allow Classification"),
                               style: GoogleFonts.poppins(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,

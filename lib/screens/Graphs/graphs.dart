@@ -68,8 +68,10 @@ class _GraphsState extends State<Graphs> {
       _categories = categories;
       _categoryLimits = categoryLimits;
       // print("Graphs $_transactions");
-      _startDateController.text = DateFormat('dd-MM-yyyy').format(_startDate).toString();
-      _endDateController.text = DateFormat('dd-MM-yyyy').format(_endDate).toString();
+      _startDateController.text =
+          DateFormat('dd-MM-yyyy').format(_startDate).toString();
+      _endDateController.text =
+          DateFormat('dd-MM-yyyy').format(_endDate).toString();
     });
 
     _categorizedTransactions();
@@ -79,7 +81,7 @@ class _GraphsState extends State<Graphs> {
     List<Color> colors = [];
 
     int i = 0;
-    while(i < n) {
+    while (i < n) {
       var generatedColor = Random().nextInt(Colors.primaries.length);
       if (!colors.contains(Colors.primaries[generatedColor])) {
         colors.add(Colors.primaries[generatedColor]);
@@ -92,7 +94,8 @@ class _GraphsState extends State<Graphs> {
         i++;
         continue;
       }
-      colors.add(Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0));
+      colors.add(
+          Color((Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0));
     }
 
     return colors;
@@ -127,7 +130,8 @@ class _GraphsState extends State<Graphs> {
 
         for (int i = 0; i < _categories.length; i++) {
           for (int j = 0; j < 12; j++) {
-            categoricalExpenses[year]![j].add(_CategoricalExpense(_categories[i], 0, colors[i]));
+            categoricalExpenses[year]![j]
+                .add(_CategoricalExpense(_categories[i], 0, colors[i]));
           }
         }
       }
@@ -135,7 +139,9 @@ class _GraphsState extends State<Graphs> {
       monthlyExpenses[year]![int.parse(month) - 1].expenses += data['amount'];
       String category = data['category'];
       // print("$category ${categoricalExpenses[year]![int.parse(month) - 1]!.firstWhere((element) => element.category == category).category}");
-      categoricalExpenses[year]![int.parse(month) - 1]!.firstWhere((element) => element.category == category).expenses += data['amount'];
+      categoricalExpenses[year]![int.parse(month) - 1]
+          .firstWhere((element) => element.category == category)
+          .expenses += data['amount'];
     }
 
     years.sort((a, b) => int.parse(a).compareTo(int.parse(b)));
@@ -168,9 +174,10 @@ class _GraphsState extends State<Graphs> {
       ));
     }
     List<Widget> piecharts = [];
-    for(int i = 0; i < years.length; i++) {
-      for(int j = 1; j <= 12; j++) {
-        if (categoricalExpenses[years[i]]![j-1].isNotEmpty && monthlyExpenses[years[i]]![j-1].expenses > 0) {
+    for (int i = 0; i < years.length; i++) {
+      for (int j = 1; j <= 12; j++) {
+        if (categoricalExpenses[years[i]]![j - 1].isNotEmpty &&
+            monthlyExpenses[years[i]]![j - 1].expenses > 0) {
           // print("Categorical Expenses ${categoricalExpenses[years[i]]![j]}");
           piecharts.add(SfCircularChart(
             title: ChartTitle(text: 'Categorical Expenses in  $j,${years[i]}'),
@@ -178,10 +185,13 @@ class _GraphsState extends State<Graphs> {
             tooltipBehavior: TooltipBehavior(enable: true),
             series: <CircularSeries<_CategoricalExpense, String>>[
               PieSeries<_CategoricalExpense, String>(
-                dataSource: categoricalExpenses[years[i]]![j-1],
-                xValueMapper: (_CategoricalExpense expenses, _) => expenses.category,
-                yValueMapper: (_CategoricalExpense expenses, _) => expenses.expenses,
-                pointColorMapper: (_CategoricalExpense expenses, _) => expenses.color,
+                dataSource: categoricalExpenses[years[i]]![j - 1],
+                xValueMapper: (_CategoricalExpense expenses, _) =>
+                    expenses.category,
+                yValueMapper: (_CategoricalExpense expenses, _) =>
+                    expenses.expenses,
+                pointColorMapper: (_CategoricalExpense expenses, _) =>
+                    expenses.color,
                 dataLabelSettings: const DataLabelSettings(isVisible: true),
                 explode: true,
                 explodeGesture: ActivationMode.singleTap,
@@ -201,136 +211,139 @@ class _GraphsState extends State<Graphs> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading ? const SpinKitSpinningLines(color: purple):Scaffold(
-      appBar: AppBar(
-        title: const Text("Graphs"),
-        backgroundColor: purple,
-      ),
-
-
-      body: ListView(
-        children: [
-          const SizedBox(
-              height: 20
-          ),
-          // Create a date range picker.
-          Form(
-            key: _formKey,
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    child: TextFormField(
-                      controller: _startDateController,
-                      decoration: const InputDecoration(
-                        labelText: 'Start Date',
-                        hintText: 'Enter the start date',
-                      ),
-
-                      onTap: () async {
-                        // Below line stops keyboard from appearing
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        // Show Date Picker Here
-                        DateTime? date = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2010),
-                          lastDate: DateTime(2050),
-                        );
-
-                        if (date!.isAfter(_endDate)) {
-                          if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Start date cannot be after end date"),
-                            ),
-                          );
-                          return;
-                        }
-
-                        setState(() {
-                          _startDate = date!;
-                          _startDateController.text = DateFormat('dd-MM-yyyy').format(_startDate).toString();
-                          _categorizedTransactions();
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                      height: 10
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    child: TextFormField(
-                      controller: _endDateController,
-                      decoration: const InputDecoration(
-                        labelText: 'End Date',
-                        hintText: 'Enter the end date',
-                      ),
-                      onTap: () async {
-                        // Below line stops keyboard from appearing
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        // Show Date Picker Here
-                        DateTime? date = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2010),
-                          lastDate: DateTime(2050),
-                        );
-
-                        if (date!.isBefore(_startDate)) {
-                          if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("End date cannot be before start date"),
-                            ),
-                          );
-                          return;
-                        }
-
-                        setState(() {
-                          _endDate = date!;
-                          _endDateController.text = DateFormat('dd-MM-yyyy').format(_endDate).toString();
-                          _categorizedTransactions();
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
+    return _isLoading
+        ? const SpinKitSpinningLines(color: purple)
+        : Scaffold(
+            appBar: AppBar(
+              title: const Text("Graphs"),
+              backgroundColor: purple,
             ),
-          ),
-          const SizedBox(height: 20),
-          (_monthlyCharts.isEmpty)
-              ? const Center(child: Text("No data to display"))
-              : SizedBox(
-                  height: 300,
-                  child: PageView(
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    clipBehavior: Clip.none,
-                    reverse: true,
-                    children: _monthlyCharts.reversed.toList(),
+            body: ListView(
+              children: [
+                const SizedBox(height: 20),
+                // Create a date range picker.
+                Form(
+                  key: _formKey,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          child: TextFormField(
+                            controller: _startDateController,
+                            decoration: const InputDecoration(
+                              labelText: 'Start Date',
+                              hintText: 'Enter the start date',
+                            ),
+                            onTap: () async {
+                              // Below line stops keyboard from appearing
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              // Show Date Picker Here
+                              DateTime? date = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2010),
+                                lastDate: DateTime(2050),
+                              );
+
+                              if (date!.isAfter(_endDate)) {
+                                if (!mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        "Start date cannot be after end date"),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              setState(() {
+                                _startDate = date;
+                                _startDateController.text =
+                                    DateFormat('dd-MM-yyyy')
+                                        .format(_startDate)
+                                        .toString();
+                                _categorizedTransactions();
+                              });
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          child: TextFormField(
+                            controller: _endDateController,
+                            decoration: const InputDecoration(
+                              labelText: 'End Date',
+                              hintText: 'Enter the end date',
+                            ),
+                            onTap: () async {
+                              // Below line stops keyboard from appearing
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              // Show Date Picker Here
+                              DateTime? date = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2010),
+                                lastDate: DateTime(2050),
+                              );
+
+                              if (date!.isBefore(_startDate)) {
+                                if (!mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        "End date cannot be before start date"),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              setState(() {
+                                _endDate = date;
+                                _endDateController.text =
+                                    DateFormat('dd-MM-yyyy')
+                                        .format(_endDate)
+                                        .toString();
+                                _categorizedTransactions();
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-          const SizedBox(height: 20),
-          (_monthlyCategoricalCharts.isEmpty) ?
-            const Center(child: Text("No data to display")) :
-            SizedBox(
-              height: 300,
-              child: PageView(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                clipBehavior: Clip.none,
-                reverse: true,
-                children: _monthlyCategoricalCharts.reversed.toList(),
-              ),
+                const SizedBox(height: 20),
+                (_monthlyCharts.isEmpty)
+                    ? const Center(child: Text("No data to display"))
+                    : SizedBox(
+                        height: 300,
+                        child: PageView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          clipBehavior: Clip.none,
+                          reverse: true,
+                          children: _monthlyCharts.reversed.toList(),
+                        ),
+                      ),
+                const SizedBox(height: 20),
+                (_monthlyCategoricalCharts.isEmpty)
+                    ? const Center(child: Text("No data to display"))
+                    : SizedBox(
+                        height: 300,
+                        child: PageView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          clipBehavior: Clip.none,
+                          reverse: true,
+                          children: _monthlyCategoricalCharts.reversed.toList(),
+                        ),
+                      ),
+              ],
             ),
-        ],
-      ),
-    );
+          );
   }
 }
 
