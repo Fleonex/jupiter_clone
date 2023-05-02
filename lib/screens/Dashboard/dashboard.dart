@@ -80,6 +80,9 @@ class _DashboardState extends State<Dashboard> {
         description: DateFormat('dd MMM yyyy').format(date).toString(),
         date: data['category'],
       ));
+      list.add(const SizedBox(
+        height: 10,
+      ));
     }
 
     // print("\n\n\n\nThis is the total " + total.toString() + "\n");

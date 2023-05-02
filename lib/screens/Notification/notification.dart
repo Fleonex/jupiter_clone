@@ -29,6 +29,22 @@ class _NotificationState extends State<Notification> {
     _fetchData();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return _isLoading
+        ? SpinKitSpinningLines(color: purple)
+        : Scaffold(
+            backgroundColor: Colors.grey,
+            appBar: AppBar(
+              title: const Text("Notifications"),
+              backgroundColor: purple,
+            ),
+            body: SingleChildScrollView(
+              child: Column(children: [..._widgetList]),
+            ),
+          );
+  }
+
   void _fetchData() async {
     setState(() {
       _isLoading = true;
@@ -74,6 +90,9 @@ class _NotificationState extends State<Notification> {
         list.add(budget_file.Budget(
             category: budgetSnapShot[i]['category'].toString(),
             exceededBy: difference));
+        list.add(const SizedBox(
+          height: 10,
+        ));
       }
     }
     setState(() {
@@ -83,20 +102,5 @@ class _NotificationState extends State<Notification> {
       print(list.toString() + "\n");
       _isLoading = false;
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _isLoading
-        ? SpinKitSpinningLines(color: purple)
-        : Scaffold(
-            appBar: AppBar(
-              title: const Text("Notifications"),
-              backgroundColor: purple,
-            ),
-            body: SingleChildScrollView(
-              child: Column(children: [..._widgetList]),
-            ),
-          );
   }
 }
