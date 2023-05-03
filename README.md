@@ -1,16 +1,42 @@
 # jupiter_clone
 
-A new Flutter project.
+A personal expense tracker build using Flutter
 
-## Getting Started
+## How to Run
 
-This project is a starting point for a Flutter application.
+Execute the following commands in the directory containing the project.
 
-A few resources to get you started if this is your first Flutter project:
+- flutter pub get
+- flutter run
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Dependencies
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter - Forward Edition 3.7 Release
+- Dart - v2.19.6
+ 
+Packages used in the project are mentioned in pubspec.yaml and will be automatically downloaded when pub get is run.
+
+Packages included are 
+
+  cupertino_icons: ^1.0.2
+  google_sign_in: ^5.2.1
+  provider: ^6.0.5
+  flutter_svg: ^2.0.5
+  google_fonts: ^2.1.0
+  sign_button: ^2.0.3
+  firebase_auth: ^4.4.2
+  firebase_core: ^2.10.0
+  cloud_firestore: ^4.5.3
+  firebase_storage: ^11.1.1
+  google_nav_bar: ^5.0.2
+  flutter_excel: ^1.0.1
+  file_picker: ^4.6.1
+  csv: ^5.0.1
+  path_provider: ^2.0.10
+  open_file: ^3.2.1
+  excel: ^2.1.0
+  flutter_spinkit: ^5.1.0
+  uuid: ^3.0.7
+  intl: ^0.17.0
+  syncfusion_flutter_charts: ^21.1.41
+  permission_handler: ^8.3.0
