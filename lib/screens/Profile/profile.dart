@@ -63,13 +63,11 @@ class _ProfilePageState extends State<ProfilePage> {
         for (var row in excel.tables[table]!.rows) {
           List<String> rowList = [];
           for (var cell in row) {
-            if(cell == null){
+            if (cell == null) {
               rowList.add("");
+            } else {
+              rowList.add(cell.value.toString());
             }
-            else{
-              rowList.add(cell!.value.toString());
-            }
-
           }
           if (!first) {
             String gotCategory = "";
@@ -287,9 +285,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 child: Column(
                   children: [
-
                     Row(
-
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(Icons.account_tree, color: red, size: 30),
