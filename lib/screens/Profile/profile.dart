@@ -297,8 +297,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Text(
                               (isClassificationAllowed
-                                  ? "Don't Classify"
-                                  : "Classify"),
+                                  ? "Classification Allowed"
+                                  : "Classification Not Allowed"),
                               style: GoogleFonts.poppins(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
