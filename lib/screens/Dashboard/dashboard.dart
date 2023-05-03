@@ -77,8 +77,9 @@ class _DashboardState extends State<Dashboard> {
 
       list.add(transaction_file.Transaction(
         amount: data['amount'],
-        description: DateFormat('dd MMM yyyy').format(date).toString(),
-        date: data['category'],
+        date: DateFormat('dd MMM yyyy').format(date).toString(),
+        category: data['category'],
+        description: data['description'],
       ));
       list.add(const SizedBox(
         height: 10,
@@ -186,13 +187,18 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SingleChildScrollView(
-                    child: Column(children: [..._widgetList]),
-                  ),
-                  const SizedBox(height: 20),
+                  Container(
+                      height: 1870,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Column(children: [..._widgetList]),
+                            const SizedBox(
+                              height: 150,
+                            )
+                          ],
+                        ),
+                      )),
                 ],
               ),
               floatingActionButton: FloatingActionButton(
