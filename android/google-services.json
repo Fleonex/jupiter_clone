@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "830005811639",
-    "project_id": "jupiter-clone",
-    "storage_bucket": "jupiter-clone.appspot.com"
+    "project_number": "61626816283",
+    "project_id": "jupiter-clone-536ea",
+    "storage_bucket": "jupiter-clone-536ea.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:830005811639:android:680109666c76c11e1ef032",
+        "mobilesdk_app_id": "1:61626816283:android:1d1ffe79642f218383e5be",
         "android_client_info": {
           "package_name": "com.example.jupiter_clone"
         }
       },
       "oauth_client": [
         {
-          "client_id": "830005811639-gkkru6jhfrdpgr782c53vd3el5h4kjld.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.jupiter_clone",
-            "certificate_hash": "09359c9bf39e884826848e6d6047f091c4e2e06c"
-          }
-        },
-        {
-          "client_id": "830005811639-15ctrno11i92cfg98nqutbiid8qs1275.apps.googleusercontent.com",
+          "client_id": "61626816283-t438i9bgeopkcq42rfaqj5ediqcc9l4f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBDMX6uEczpW3bZmWkniA8bt0x8ZVH9WtE"
+          "current_key": "AIzaSyBsK4UiRWMsf53alwL3rarMJBtB2igPGLA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "830005811639-15ctrno11i92cfg98nqutbiid8qs1275.apps.googleusercontent.com",
+              "client_id": "61626816283-hrb91ds0esekml49v8gcg0icosdbmkrf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
