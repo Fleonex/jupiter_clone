@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jupiter_clone/screens/Dashboard/home.dart';
 import 'package:jupiter_clone/screens/Login/login_screen.dart';
+import 'package:jupiter_clone/screens/verify_screen.dart';
 import 'package:jupiter_clone/style/constants.dart';
 import 'package:jupiter_clone/screens/Splash/splash.dart';
 import 'package:flutter/services.dart';
@@ -75,7 +76,12 @@ class AuthWrap extends StatelessWidget {
         if (!snapshot.hasData) {
           return const LoginScreen();
         } else {
-          return const Home();
+          if (FirebaseAuth.instance.currentUser!.emailVerified) {
+            return const Home();
+          } else {
+            FirebaseAuth.instance.currentUser!.sendEmailVerification();
+            return const VerifyScreen();
+          }
         }
       },
     );

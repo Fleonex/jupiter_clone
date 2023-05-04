@@ -33,10 +33,10 @@ class _SignUpFormState extends State<SignUpForm> {
               textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
               onSaved: (email) {},
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your email",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.person),
                 ),
               ),
@@ -50,7 +50,9 @@ class _SignUpFormState extends State<SignUpForm> {
                 cursorColor: kPrimaryColor,
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
-                    icon: (_showPassword == true) ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+                    icon: (_showPassword == true)
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off),
                     onPressed: () {
                       setState(() {
                         _showPassword = !_showPassword;
@@ -58,8 +60,8 @@ class _SignUpFormState extends State<SignUpForm> {
                     },
                   ),
                   hintText: "Your password",
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(defaultPadding),
+                  prefixIcon: const Padding(
+                    padding: EdgeInsets.all(defaultPadding),
                     child: Icon(Icons.lock),
                   ),
                 ),
@@ -68,14 +70,15 @@ class _SignUpFormState extends State<SignUpForm> {
             const SizedBox(height: defaultPadding / 2),
             ElevatedButton(
               onPressed: () async {
-                print("This is email " + _emailController.text + "\n");
-                print("This is password " + _passwordController.text + "\n");
-                var authClass = new AuthService();
+                // print("This is email " + _emailController.text + "\n");
+                // print("This is password " + _passwordController.text + "\n");
+                var authClass = AuthService();
                 var currentUser = authClass.createUserWithEmailAndPassword(
                     email: _emailController.text,
                     password: _passwordController.text);
+                Navigator.of(context).pop();
                 // var currentUser = "Hello World";
-                print("The current User is " + currentUser.toString());
+                // print("The current User is " + currentUser.toString());
               },
               child: Text("Sign Up".toUpperCase()),
             ),
@@ -83,14 +86,7 @@ class _SignUpFormState extends State<SignUpForm> {
             AlreadyHaveAnAccountCheck(
               login: false,
               press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return LoginScreen();
-                    },
-                  ),
-                );
+                Navigator.of(context).pop();
               },
             ),
           ],

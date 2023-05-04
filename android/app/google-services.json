@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:61626816283:android:0fd44d2dd025d12483e5be",
+        "mobilesdk_app_id": "1:61626816283:android:1d1ffe79642f218383e5be",
         "android_client_info": {
           "package_name": "com.example.jupiter_clone"
         }
       },
       "oauth_client": [
         {
-          "client_id": "61626816283-hrb91ds0esekml49v8gcg0icosdbmkrf.apps.googleusercontent.com",
+          "client_id": "61626816283-t438i9bgeopkcq42rfaqj5ediqcc9l4f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
