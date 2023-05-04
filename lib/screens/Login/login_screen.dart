@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jupiter_clone/responsive.dart';
+import 'package:jupiter_clone/services/auth.dart';
+import 'package:sign_button/sign_button.dart';
 
 import '../../components/background.dart';
 import 'components/login_form.dart';
@@ -58,6 +60,10 @@ class MobileLoginScreen extends StatelessWidget {
             ),
             Spacer(),
           ],
+        ),
+        SignInButton(
+          buttonType: ButtonType.google,
+          onPressed: () => AuthService().signInWithGoogle(),
         ),
       ],
     );
