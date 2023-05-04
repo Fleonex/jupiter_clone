@@ -76,12 +76,13 @@ class AuthWrap extends StatelessWidget {
         if (!snapshot.hasData) {
           return const LoginScreen();
         } else {
-          if (FirebaseAuth.instance.currentUser!.emailVerified) {
-            return const Home();
-          } else {
-            FirebaseAuth.instance.currentUser!.sendEmailVerification();
-            return const VerifyScreen();
-          }
+          return const Home();
+          // if (FirebaseAuth.instance.currentUser!.emailVerified) {
+          //   return const Home();
+          // } else {
+          //   FirebaseAuth.instance.currentUser!.sendEmailVerification();
+          //   return const VerifyScreen();
+          // }
         }
       },
     );
