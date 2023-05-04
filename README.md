@@ -13,6 +13,7 @@ Execute the following commands in the directory containing the project.
 
 - Flutter - Forward Edition 3.7 Release
 - Dart - v2.19.6
+- Android Studio (Any version)
  
 Packages used in the project are mentioned in pubspec.yaml and will be automatically downloaded when pub get is run.
 
@@ -40,3 +41,9 @@ Packages included are
 -  intl: ^0.17.0
 -  syncfusion_flutter_charts: ^21.1.41
 -  permission_handler: ^8.3.0
+
+## How to Build package
+
+Open the project in the Android Studio. 
+In the top dropdown menu bar, select the <b>Build</b> option. In the dropdown list, select <b>Flutter</b>. 
+To build apk, select <b>Build APK</b>.
